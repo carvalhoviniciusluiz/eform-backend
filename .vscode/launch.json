@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: NestJs Native Debugger",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "stopOnEntry": false,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/nest",
+      "protocol": "inspector",
+      "restart": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: ts-node-dev Debugger",
+      "port": 7001,
+      "stopOnEntry": false,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "/app/*": "${workspaceRoot}/*"
+      },
+      "remoteRoot": "/app/"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Server",
+      "port": 9229,
+      "restart": true,
+      "stopOnEntry": false,
+      "protocol": "inspector"
+    }
+  ]
+}

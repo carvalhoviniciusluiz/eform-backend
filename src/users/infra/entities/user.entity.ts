@@ -1,0 +1,33 @@
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from 'common';
+
+@Entity('users')
+export class UserEntity extends BaseEntity {
+  @Column({ type: 'varchar' })
+  firstname?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  lastname?: string;
+
+  @Column({ type: 'varchar', name: 'document_number' })
+  documentNumber?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  email?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  phone?: string;
+
+  @Column({ type: 'varchar' })
+  password?: string;
+
+  @Column({ type: 'boolean', default: false, name: 'has_validate' })
+  hasValidate = false;
+
+  @Column({
+    name: 'closed_at',
+    nullable: true,
+    type: 'timestamp with time zone'
+  })
+  closedAt: Date | null = null;
+}

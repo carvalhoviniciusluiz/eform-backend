@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IUser } from 'users/domain';
 import { Expose } from 'class-transformer';
 
 export class ResponseUsersRequestDto {
@@ -30,34 +29,4 @@ export class ResponseUsersRequestDto {
   @ApiProperty({ example: '2021-10-07T13:59:39.792Z' })
   @Expose()
   updatedAt: Date;
-
-  public static factory(rows: IUser[]): any {
-    const results = rows.map(row => {
-      const {
-        id,
-        firstname,
-        lastname,
-        documentNumber: number,
-        email,
-        phone,
-        hasValidate,
-        updatedAt
-      } = row.properties();
-
-      return {
-        id,
-        firstname,
-        lastname,
-        document: {
-          number
-        },
-        email,
-        phone,
-        hasValidate,
-        updatedAt
-      };
-    });
-
-    return results;
-  }
 }

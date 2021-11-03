@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put, Query, Validati
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetUsersCommand, CreateUserCommand, UpdateUserCommand } from 'users/application';
-import { CreateUserBodyDTO, ResponseUsersRequestDto, UpdateUserBodyDTO } from 'users/presentation';
+import { CreateUserBodyDTO, UpdateUserBodyDTO } from 'users/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedUserResultsDto } from 'users/presentation/dtos';
 import { IUser } from 'users/domain';
@@ -18,9 +18,7 @@ export class UsersController {
     const { page, pagesize } = paginateDto;
     const command = new GetUsersCommand(page, pagesize);
     const [rows, count] = await this.commandBus.execute<GetUsersCommand, [IUser[], number]>(command);
-    const parsedRows = ResponseUsersRequestDto.factory(rows);
-
-    return new PaginatedUserResultsDto(parsedRows, count, page, pagesize);
+    return new PaginatedUserResultsDto(rows, count, page, pagesize);
   }
 
   @ApiResponse({ status: 200, description: 'Success' })

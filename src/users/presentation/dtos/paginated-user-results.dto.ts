@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginatedResults } from 'common/dtos';
-import { PaginatedBodyDto } from 'common/dtos';
+import { PaginatedResults, PaginatedBodyDto } from 'common/dtos';
 import { ResponseUsersRequestDto } from 'users/presentation/dtos';
 
 export class PaginatedUserResultsDto extends PaginatedResults {

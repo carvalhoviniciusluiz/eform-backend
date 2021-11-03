@@ -13,9 +13,9 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, voi
   ) {}
 
   async execute(command: UpdateUserCommand): Promise<void> {
-    const { aproperties } = command;
+    const { id, aproperties } = command;
 
-    const user = this.userFactory.reconstitute({
+    const data = this.userFactory.reconstitute({
       firstname: aproperties.firstname,
       lastname: aproperties.lastname,
       documentNumber: aproperties.documentNumber,
@@ -26,6 +26,6 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, voi
       version: aproperties.version
     });
 
-    await this.userRepository.update(aproperties.id, user);
+    await this.userRepository.update(id, data);
   }
 }

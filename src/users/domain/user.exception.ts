@@ -1,8 +1,8 @@
 import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 export class UserException extends NotFoundException {
-  static canNotOpenUser(id: string): InternalServerErrorException {
-    return new InternalServerErrorException(`The user with id "${id}" can not open user`);
+  static canNotCreateUser(id: string): InternalServerErrorException {
+    return new InternalServerErrorException(`The user with id "${id}" can not create user`);
   }
 
   static notFoundForId(id: string): UserException {

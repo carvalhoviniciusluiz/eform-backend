@@ -19,10 +19,9 @@ export class UserRepositoryImplement implements UserRepository {
     return [results, count];
   }
 
-  async save(data: IUser | IUser[]): Promise<void> {
-    const models = Array.isArray(data) ? data : [data];
-    const entities = models.map(model => this.modelToEntity(model));
-    await getConnection().createQueryBuilder().insert().into(UserEntity).values(entities).execute();
+  async save(data: IUser): Promise<void> {
+    const entity = this.modelToEntity(data);
+    await getConnection().createQueryBuilder().insert().into(UserEntity).values([entity]).execute();
   }
 
   async update(id: string, data: IUser): Promise<void> {

@@ -57,7 +57,9 @@ export class UserImplement extends AggregateRoot implements IUser {
   }
 
   open(password: string): void {
-    if (this.email === '' || this.documentNumber === '' || password === '') throw UserException.canNotOpenUser(this.id);
+    const hasDocumentNumber = !!this.documentNumber;
+
+    if (!hasDocumentNumber) throw UserException.canNotCreateUser(this.id);
 
     const salt = bcrypt.genSaltSync();
     this.password = bcrypt.hashSync(password, salt);

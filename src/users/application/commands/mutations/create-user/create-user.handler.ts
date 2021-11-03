@@ -1,15 +1,15 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UserFactory, UserRepository } from 'users/domain';
+import { UserFactory, IUserRepository } from 'users/domain';
 import { v4 as uuid } from 'uuid';
-import { CreateUserCommand } from 'users/application/commands/create-user';
+import { CreateUserCommand } from 'users/application/commands/mutations/create-user';
 import { InjectionToken } from 'users/application/commands/injection.token';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand, string> {
   constructor(
     @Inject(InjectionToken.USER_REPOSITORY)
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: IUserRepository,
     private readonly userFactory: UserFactory
   ) {}
 

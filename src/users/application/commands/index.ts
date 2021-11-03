@@ -1,4 +1,3 @@
-export * from './get-users';
-export * from './create-user';
-export * from './update-user';
+export * from './mutations';
+export * from './queries';
 export * from './injection.token';

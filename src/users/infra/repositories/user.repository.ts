@@ -1,9 +1,9 @@
 import { getConnection } from 'typeorm';
-import { UserFactory, UserProperties, UserRepository, IUser } from 'users/domain';
+import { UserFactory, UserProperties, IUserRepository, IUser } from 'users/domain';
 import { UserEntity } from 'users/infra';
 import { Inject } from '@nestjs/common';
 
-export class UserRepositoryImplement implements UserRepository {
+export class UserRepositoryImplement implements IUserRepository {
   constructor(@Inject(UserFactory) private readonly userFactory: UserFactory) {}
 
   async getAll(page: number, pagesize: number): Promise<[IUser[], number]> {

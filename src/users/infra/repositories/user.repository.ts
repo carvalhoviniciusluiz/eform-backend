@@ -6,7 +6,7 @@ import { Inject } from '@nestjs/common';
 export class UserRepositoryImplement implements IUserRepository {
   constructor(@Inject(UserFactory) private readonly userFactory: UserFactory) {}
 
-  async find(page: number, pagesize: number): Promise<[IUser[], number]> {
+  async find(page = 0, pagesize = 20): Promise<[IUser[], number]> {
     const query = getConnection().createQueryBuilder().select('user').from(UserEntity, 'user');
 
     if (pagesize) {

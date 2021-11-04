@@ -20,16 +20,16 @@ export class UserRepositoryImplement implements IUserRepository {
   }
 
   async save(data: IUser): Promise<void> {
-    const entity = this.modelToEntity(data);
-    await getConnection().createQueryBuilder().insert().into(UserEntity).values([entity]).execute();
+    const properties = this.getUserProperties(data);
+    await getConnection().createQueryBuilder().insert().into(UserEntity).values([properties]).execute();
   }
 
   async update(id: string, data: IUser): Promise<void> {
-    const entity = this.modelToEntity(data);
-    await getConnection().createQueryBuilder().update(UserEntity).set(entity).where('id = :id', { id }).execute();
+    const properties = this.getUserProperties(data);
+    await getConnection().createQueryBuilder().update(UserEntity).set(properties).where('id = :id', { id }).execute();
   }
 
-  private modelToEntity(model: IUser): UserProperties {
+  private getUserProperties(model: IUser): UserProperties {
     const properties = Object.entries(model.properties()).filter(([, v]) => v);
     return Object.fromEntries(properties);
   }

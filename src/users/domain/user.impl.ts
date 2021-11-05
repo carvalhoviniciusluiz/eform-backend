@@ -1,27 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import * as bcrypt from 'bcrypt';
 import { UserException } from 'users/domain';
-
-export type UserProperties = {
-  readonly id?: string;
-  readonly firstname?: string;
-  readonly documentNumber?: string;
-  readonly lastname?: string;
-  readonly email?: string;
-  readonly phone?: string;
-  readonly hasValidate?: boolean;
-  readonly password?: string;
-  readonly updatedAt?: Date;
-  readonly closedAt?: Date | null;
-  readonly version?: number;
-};
-
-export interface IUser {
-  properties: () => UserProperties;
-  open: (password: string) => void;
-  updatePassword: (password: string, data: string) => void;
-  close: (password: string) => void;
-}
+import { IUser, UserProperties } from 'users/domain/protocols';
 
 export class UserImplement extends AggregateRoot implements IUser {
   private id?: string;

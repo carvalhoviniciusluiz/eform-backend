@@ -21,7 +21,7 @@ describe('SignInHandler', () => {
 
   describe('execute', () => {
     it('should execute SignInCommand', async () => {
-      const returnValue = 'xxx';
+      const returnSignInValue = 'xxx';
 
       const payload = {
         avatar: 'avatar',
@@ -30,13 +30,21 @@ describe('SignInHandler', () => {
         email: 'email'
       };
 
-      service.sign = jest.fn().mockReturnValue(returnValue);
+      const returnDecodeValue = {
+        exp: 1
+      };
+
+      service.sign = jest.fn().mockReturnValue(returnSignInValue);
+      service.decode = jest.fn().mockReturnValue(returnDecodeValue);
 
       const command = new SignInCommand(payload);
 
       await expect(handler.execute(command)).resolves.toEqual({
-        accessToken: returnValue,
-        refreshToken: returnValue
+        accessToken: returnSignInValue,
+        accessTokenExpiresIn: returnDecodeValue.exp,
+        refreshToken: returnSignInValue,
+        refreshTokenExpiresIn: returnDecodeValue.exp,
+        tokenType: 'bearer'
       });
       expect(service.sign).toBeCalledTimes(2);
       expect(service.sign).toBeCalledWith(payload);

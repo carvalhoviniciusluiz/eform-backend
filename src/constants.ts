@@ -24,6 +24,13 @@ export const POSTGRES_PASSWORD = configService.get<string>('POSTGRES_PASSWORD');
 
 export const REJECT_UNAUTHORIZED = configService.get<string>('REJECT_UNAUTHORIZED') || 'false';
 
+export const JWT_SECRET = configService.get<string>('JWT_SECRET') || 'jwt-secret';
+export const JWT_SECRET_EXPIRES_IN = configService.get<string>('JWT_SECRET_EXPIRES_IN') || '5m';
+export const JWT_SECRET_REFRESHTOKEN_EXPIRES_IN =
+  configService.get<string>('JWT_SECRET_REFRESHTOKEN_EXPIRES_IN') || '7d';
+export const JWT_SECRET_REFRESHTOKEN =
+  configService.get<string>('JWT_SECRET_REFRESHTOKEN') || 'jwt-secret-refreshtoken';
+
 if (IS_DEV) {
   console.table(ENV_FILE);
 }

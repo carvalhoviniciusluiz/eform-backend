@@ -1,9 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import * as bcrypt from 'bcrypt';
 import { UserException } from 'users/domain';
-import { IUser, UserProperties } from 'users/domain/protocols';
+import { IUser, TUserEntityProps } from 'users/domain/protocols';
 
-export class UserImplement extends AggregateRoot implements IUser {
+export class UserModel extends AggregateRoot implements IUser {
   private id?: string;
   private firstname?: string;
   private lastname?: string;
@@ -11,16 +11,18 @@ export class UserImplement extends AggregateRoot implements IUser {
   private email?: string;
   private phone?: string;
   private hasValidate = false;
-  private password?: string;
+  private passwordHash?: string;
+  private salt?: string;
+  private createdAt?: Date | null = null;
   private closedAt?: Date | null = null;
   private version = 0;
 
-  constructor(properties: UserProperties) {
+  constructor(props: TUserEntityProps) {
     super();
-    Object.assign(this, properties);
+    Object.assign(this, props);
   }
 
-  properties(): UserProperties {
+  props(): TUserEntityProps {
     return {
       id: this.id,
       firstname: this.firstname,
@@ -29,38 +31,45 @@ export class UserImplement extends AggregateRoot implements IUser {
       email: this.email,
       phone: this.phone,
       hasValidate: this.hasValidate,
-      password: this.password,
+      passwordHash: this.passwordHash,
+      salt: this.salt,
+      createdAt: this.createdAt,
       updatedAt: new Date(),
       closedAt: this.closedAt,
       version: this.version
     };
   }
 
-  open(password: string): void {
+  createAccount(password: string): void {
     const hasDocumentNumber = !!this.documentNumber;
 
     if (!hasDocumentNumber) throw UserException.canNotCreateUser(this.id);
 
-    const salt = bcrypt.genSaltSync();
-    this.password = bcrypt.hashSync(password, salt);
+    this.salt = bcrypt.genSaltSync();
+    this.passwordHash = bcrypt.hashSync(password, this.salt);
   }
 
-  close(password: string): void {
+  closeAccount(password: string): void {
     if (!this.comparePassword(password)) throw UserException.unauthorizedForId(this.id);
 
     this.closedAt = new Date();
     this.version = this.version + 1;
   }
 
-  updatePassword(password: string, data: string): void {
+  updatePassword(password: string, newPassword: string): void {
     if (!this.comparePassword(password)) throw UserException.unauthorizedForId(this.id);
 
-    const salt = bcrypt.genSaltSync();
-    this.password = bcrypt.hashSync(data, salt);
+    this.salt = bcrypt.genSaltSync();
+    this.passwordHash = bcrypt.hashSync(newPassword, this.salt);
     this.version = this.version + 1;
   }
 
   private comparePassword(password: string): boolean {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.passwordHash);
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    const hash = await bcrypt.hash(password, this.salt);
+    return this.passwordHash === hash;
   }
 }

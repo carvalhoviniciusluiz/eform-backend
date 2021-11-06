@@ -14,9 +14,7 @@ describe('UsersController', () => {
       providers: [
         {
           provide: UserService,
-          useValue: {
-            getAll: jest.fn()
-          }
+          useValue: jest.fn()
         }
       ]
     }).compile();

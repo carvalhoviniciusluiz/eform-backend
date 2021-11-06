@@ -1,12 +1,26 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put, Query, ValidationPipe } from '@nestjs/common';
-import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  ValidationPipe
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateUserBodyDTO, UpdateUserBodyDTO } from 'users/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedUserResultsDto } from 'users/presentation/dtos';
 import { UserService } from 'users/domain';
 
 @ApiTags('USER')
+@ApiBearerAuth()
 @Controller('users')
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly userService: UserService) {}
 

@@ -3,8 +3,7 @@ import { Test } from '@nestjs/testing';
 
 import { GetUsersCommand } from 'users/application/commands/queries/get-users/get-users.command';
 import { GetUsersHandler } from 'users/application/commands/queries/get-users/get-users.handler';
-import { InjectionToken } from 'users/application/commands/injection.token';
-
+import { InjectionConstant } from 'users/injection.constant';
 import { IUserRepository } from 'users/domain/user.repository';
 import { IUser } from 'users/domain';
 
@@ -16,7 +15,7 @@ describe('GetUsersHandler', () => {
 
   beforeEach(async () => {
     const repoProvider: Provider = {
-      provide: InjectionToken.USER_REPOSITORY,
+      provide: InjectionConstant.USER_REPOSITORY,
       useValue: {}
     };
     const providers: Provider[] = [GetUsersHandler, repoProvider];
@@ -24,7 +23,7 @@ describe('GetUsersHandler', () => {
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
     handler = testModule.get(GetUsersHandler);
-    repository = testModule.get(InjectionToken.USER_REPOSITORY);
+    repository = testModule.get(InjectionConstant.USER_REPOSITORY);
   });
 
   describe('execute', () => {
@@ -46,7 +45,7 @@ describe('GetUsersHandler', () => {
       const id = uuid();
       const updatedAt = new Date();
       const user: any = {
-        properties: () => ({
+        props: () => ({
           id,
           updatedAt,
           firstname: 'firstname',

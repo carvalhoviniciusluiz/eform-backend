@@ -1,14 +1,14 @@
 import { Logger, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { GetUsersHandler, CreateUserHandler, UpdateUserHandler } from './application/commands';
+import { GetUsersHandler, CreateUserHandler, UpdateUserHandler } from 'users/application/commands';
 import { UserFactory, UserService } from 'users/domain';
-import { UserRepositoryImplement } from 'users/infra';
+import { UserRepository } from 'users/infra';
 import { UsersController } from 'users/presentation';
 
 const infrastructure = [
   {
-    provide: UserRepositoryImplement.name,
-    useClass: UserRepositoryImplement
+    provide: UserRepository.name,
+    useClass: UserRepository
   }
 ];
 const application = [GetUsersHandler, CreateUserHandler, UpdateUserHandler];

@@ -5,7 +5,7 @@ describe('CreateUserCommand', () => {
   it('should create a CreateUserCommand instance', () => {
     const id = uuid();
     const command = new CreateUserCommand({ id });
-    expect(command.aproperties.id).toBe(id);
+    expect(command.props.id).toBe(id);
     expect(command instanceof CreateUserCommand).toBe(true);
   });
 });

@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 
 import { UpdateUserCommand } from 'users/application/commands/mutations/update-user/update-user.command';
 import { UpdateUserHandler } from 'users/application/commands/mutations/update-user/update-user.handler';
-import { InjectionToken } from 'users/application/commands/injection.token';
+import { InjectionConstant } from 'users/injection.constant';
 import { UserFactory } from 'users/domain/user.factory';
 
 import { IUserRepository } from 'users/domain/user.repository';
@@ -17,7 +17,7 @@ describe('UpdateUserHandler', () => {
 
   beforeEach(async () => {
     const repoProvider: Provider = {
-      provide: InjectionToken.USER_REPOSITORY,
+      provide: InjectionConstant.USER_REPOSITORY,
       useValue: {}
     };
     const factoryProvider: Provider = {
@@ -29,7 +29,7 @@ describe('UpdateUserHandler', () => {
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
     handler = testModule.get(UpdateUserHandler);
-    repository = testModule.get(InjectionToken.USER_REPOSITORY);
+    repository = testModule.get(InjectionConstant.USER_REPOSITORY);
     factory = testModule.get(UserFactory);
   });
 
@@ -37,12 +37,12 @@ describe('UpdateUserHandler', () => {
     it('should execute UpdateUserCommand', async () => {
       const account = {};
       const id = uuid();
-      const password = 'password';
+      const props = {};
 
       factory.reconstitute = jest.fn().mockReturnValue(account);
       repository.update = jest.fn().mockResolvedValue(undefined);
 
-      const command = new UpdateUserCommand(id, { password });
+      const command = new UpdateUserCommand(id, props);
 
       await expect(handler.execute(command)).resolves.not.toBeNull();
       expect(factory.reconstitute).toBeCalledTimes(1);

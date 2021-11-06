@@ -18,8 +18,11 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   phone?: string;
 
+  @Column({ type: 'varchar', name: 'password_hash' })
+  passwordHash?: string;
+
   @Column({ type: 'varchar' })
-  password?: string;
+  salt?: string;
 
   @Column({ type: 'boolean', default: false, name: 'has_validate' })
   hasValidate = false;

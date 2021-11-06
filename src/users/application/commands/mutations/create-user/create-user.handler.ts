@@ -3,34 +3,34 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserFactory, IUserRepository } from 'users/domain';
 import { v4 as uuid } from 'uuid';
 import { CreateUserCommand } from 'users/application/commands/mutations/create-user';
-import { InjectionToken } from 'users/application/commands/injection.token';
+import { InjectionConstant } from 'users/injection.constant';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand, string> {
   constructor(
-    @Inject(InjectionToken.USER_REPOSITORY)
+    @Inject(InjectionConstant.USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
     private readonly userFactory: UserFactory
   ) {}
 
   async execute(command: CreateUserCommand): Promise<string> {
-    const id = uuid();
+    const { props } = command;
 
-    const { aproperties } = command;
+    const id = uuid();
 
     const user = this.userFactory.create({
       id,
-      firstname: aproperties.firstname,
-      lastname: aproperties.lastname,
-      documentNumber: aproperties.documentNumber,
-      email: aproperties.email,
-      phone: aproperties.phone,
-      hasValidate: aproperties.hasValidate,
-      closedAt: aproperties.closedAt,
-      version: aproperties.version
+      firstname: props.firstname,
+      lastname: props.lastname,
+      documentNumber: props.documentNumber,
+      email: props.email,
+      phone: props.phone,
+      hasValidate: props.hasValidate,
+      closedAt: props.closedAt,
+      version: props.version
     });
 
-    user.open(aproperties.password);
+    user.createAccount(props.password);
 
     await this.userRepository.save(user);
 

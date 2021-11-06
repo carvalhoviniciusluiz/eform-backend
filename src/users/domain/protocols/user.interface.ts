@@ -1,8 +1,9 @@
-import { UserProperties } from 'users/domain/protocols';
+import { TUserEntityProps } from 'users/domain/protocols';
 
 export interface IUser {
-  properties: () => UserProperties;
-  open: (password: string) => void;
+  props: () => TUserEntityProps;
+  createAccount: (password: string) => void;
+  closeAccount: (password: string) => void;
   updatePassword: (password: string, data: string) => void;
-  close: (password: string) => void;
+  validatePassword: (password: string) => Promise<boolean>;
 }

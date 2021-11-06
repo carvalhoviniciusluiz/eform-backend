@@ -1,4 +1,4 @@
-export type UserProperties = {
+export type TUserEntityProps = {
   readonly id?: string;
   readonly firstname?: string;
   readonly documentNumber?: string;
@@ -6,7 +6,9 @@ export type UserProperties = {
   readonly email?: string;
   readonly phone?: string;
   readonly hasValidate?: boolean;
-  readonly password?: string;
+  readonly passwordHash?: string;
+  readonly salt?: string;
+  readonly createdAt?: Date;
   readonly updatedAt?: Date;
   readonly closedAt?: Date | null;
   readonly version?: number;

@@ -6,7 +6,7 @@ describe('UpdateUserCommand', () => {
     const id = uuid();
     const command = new UpdateUserCommand(id, { id });
     expect(command.id).toBe(id);
-    expect(command.aproperties.id).toBe(id);
+    expect(command.props.id).toBe(id);
     expect(command instanceof UpdateUserCommand).toBe(true);
   });
 });

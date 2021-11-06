@@ -10,6 +10,6 @@ export class UserException extends NotFoundException {
   }
 
   static unauthorizedForId(id: string): UnauthorizedException {
-    return new NotFoundException(`The user with id "${id}" unauthorized`);
+    return new UnauthorizedException(`The user with id "${id}" unauthorized`);
   }
 }

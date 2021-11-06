@@ -1,6 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
-import { UserService } from 'users/domain/user.service';
+import { UserService } from 'users/domain';
 
 import { v4 as uuid } from 'uuid';
 
@@ -8,7 +8,7 @@ describe('UserService', () => {
   let service: UserService;
 
   beforeEach(async () => {
-    const modRef = await Test.createTestingModule({
+    const module = await Test.createTestingModule({
       providers: [
         UserService,
         {
@@ -19,31 +19,31 @@ describe('UserService', () => {
         }
       ]
     }).compile();
-    service = modRef.get(UserService);
+    service = module.get(UserService);
   });
 
   describe('save', () => {
     it('should return void', async () => {
-      const properties = { id: uuid() };
+      const props = { id: uuid() };
 
       service.save = jest.fn().mockReturnValue(null);
 
-      expect(await service.save(properties)).toBeNull();
+      expect(await service.save(props)).toBeNull();
       expect(service.save).toBeCalledTimes(1);
-      expect(service.save).toBeCalledWith(properties);
+      expect(service.save).toBeCalledWith(props);
     });
   });
 
   describe('update', () => {
     it('should return void', async () => {
       const id = uuid();
-      const properties = { password: 'password' };
+      const props = {};
 
       service.update = jest.fn().mockReturnValue(null);
 
-      expect(await service.update(id, properties)).toBeNull();
+      expect(await service.update(id, props)).toBeNull();
       expect(service.update).toBeCalledTimes(1);
-      expect(service.update).toBeCalledWith(id, properties);
+      expect(service.update).toBeCalledWith(id, props);
     });
   });
 

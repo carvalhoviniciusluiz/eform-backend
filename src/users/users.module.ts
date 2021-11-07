@@ -4,15 +4,22 @@ import { GetUsersHandler, CreateUserHandler, UpdateUserHandler } from 'users/app
 import { UserFactory, UserService } from 'users/domain';
 import { UserRepository } from 'users/infra';
 import { UsersController } from 'users/presentation';
+import { USER_REPOSITORY, USER_SERVICE } from 'users/../constants';
 
 const infrastructure = [
   {
-    provide: UserRepository.name,
+    provide: USER_REPOSITORY,
     useClass: UserRepository
   }
 ];
 const application = [GetUsersHandler, CreateUserHandler, UpdateUserHandler];
-const domain = [UserFactory, UserService];
+const domain = [
+  UserFactory,
+  {
+    provide: USER_SERVICE,
+    useClass: UserService
+  }
+];
 
 @Module({
   imports: [CqrsModule],

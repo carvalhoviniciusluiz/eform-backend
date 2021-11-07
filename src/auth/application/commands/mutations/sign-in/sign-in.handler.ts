@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { SignInCommand } from 'auth/application/commands/mutations/sign-in';
 import { SignInProps } from 'auth/domain';
-import * as ENV from 'auth/../constants';
+import { JWT_SECRET_REFRESHTOKEN_EXPIRES_IN, JWT_SECRET_REFRESHTOKEN } from 'auth/../constants';
 
 type DecodedProps = {
   exp: number;
@@ -19,8 +19,8 @@ export class SignInHandler implements ICommandHandler<SignInCommand, SignInProps
     const accessTokenExpiresIn = accessTokenDecoded.exp;
 
     const refreshTokenOptions: JwtSignOptions = {
-      expiresIn: ENV.JWT_SECRET_REFRESHTOKEN_EXPIRES_IN,
-      secret: ENV.JWT_SECRET_REFRESHTOKEN
+      expiresIn: JWT_SECRET_REFRESHTOKEN_EXPIRES_IN,
+      secret: JWT_SECRET_REFRESHTOKEN
     };
 
     const refreshToken = this.jwtService.sign(payload, refreshTokenOptions);

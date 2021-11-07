@@ -9,17 +9,27 @@ import { UserFactory, UserService } from 'users/domain';
 import { SignInHandler } from 'auth/application/commands';
 import { ValidatePasswordUserHandler } from 'users/application';
 import { UserRepository } from 'users/infra';
-import * as ENV from '../constants';
+import { USER_REPOSITORY, AUTH_SERVICE, USER_SERVICE, JWT_SECRET, JWT_SECRET_EXPIRES_IN } from 'auth/../constants';
 
 const infrastructure = [
   JwtStrategy,
   {
-    provide: UserRepository.name,
+    provide: USER_REPOSITORY,
     useClass: UserRepository
   }
 ];
 const application = [SignInHandler, ValidatePasswordUserHandler];
-const domain = [AuthService, UserService, UserFactory];
+const domain = [
+  {
+    provide: AUTH_SERVICE,
+    useClass: AuthService
+  },
+  {
+    provide: USER_SERVICE,
+    useClass: UserService
+  },
+  UserFactory
+];
 
 @Module({
   imports: [
@@ -27,9 +37,9 @@ const domain = [AuthService, UserService, UserFactory];
       defaultStrategy: 'jwt'
     }),
     JwtModule.register({
-      secret: ENV.JWT_SECRET,
+      secret: JWT_SECRET,
       signOptions: {
-        expiresIn: ENV.JWT_SECRET_EXPIRES_IN
+        expiresIn: JWT_SECRET_EXPIRES_IN
       }
     }),
     CqrsModule

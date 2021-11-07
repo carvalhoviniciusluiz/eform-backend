@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { SignInCommand } from 'auth/application/commands/mutations/sign-in';
+import { SignInCommand } from 'auth/application/commands';
 import { ValidatePasswordUserCommand } from 'users/application';
-import { AuthException } from 'auth/domain';
+import { AuthException, IAuthService, SignInProps } from 'auth/domain';
 import { IUser } from 'users/domain';
-import { SignInProps } from 'auth/domain';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(private commandBus: CommandBus) {}
 
   async signIn(credential: string, password: string): Promise<SignInProps> {

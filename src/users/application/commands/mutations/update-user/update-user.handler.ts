@@ -2,12 +2,12 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserFactory, IUserRepository } from 'users/domain';
 import { UpdateUserCommand } from 'users/application/commands/mutations/update-user';
-import { InjectionConstant } from 'users/injection.constant';
+import { USER_REPOSITORY } from 'users/../constants';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, void> {
   constructor(
-    @Inject(InjectionConstant.USER_REPOSITORY)
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
     private readonly userFactory: UserFactory
   ) {}

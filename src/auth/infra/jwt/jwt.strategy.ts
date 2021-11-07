@@ -2,23 +2,22 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Inject, Injectable } from '@nestjs/common';
 import { AuthException, JwtPayload } from 'auth/domain';
-import { IUserRepository } from 'users/domain';
-import { InjectionConstant } from 'users/injection.constant';
-import * as ENV from 'auth/../constants';
+import { IUserRepository, TUserPropsWithoutPassword } from 'users/domain';
+import { JWT_SECRET, USER_REPOSITORY } from 'auth/../constants';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @Inject(InjectionConstant.USER_REPOSITORY)
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: ENV.JWT_SECRET
+      secretOrKey: JWT_SECRET
     });
   }
 
-  async validate(payload: JwtPayload) {
+  async validate(payload: JwtPayload): Promise<TUserPropsWithoutPassword> {
     const { email } = payload;
     const user = await this.userRepository.findByEmail(email);
 

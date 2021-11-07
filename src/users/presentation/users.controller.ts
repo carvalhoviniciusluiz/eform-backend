@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   Param,
   ParseUUIDPipe,
   Post,
@@ -15,14 +16,18 @@ import { AuthGuard } from '@nestjs/passport';
 import { CreateUserBodyDTO, UpdateUserBodyDTO } from 'users/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedUserResultsDto } from 'users/presentation/dtos';
-import { UserService } from 'users/domain';
+import { IUserService } from 'users/domain';
+import { USER_SERVICE } from 'users/../constants';
 
 @ApiTags('USER')
 @ApiBearerAuth()
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
 export class UsersController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject(USER_SERVICE)
+    private readonly userService: IUserService
+  ) {}
 
   @ApiOkResponse({ type: PaginatedUserResultsDto })
   @Get()

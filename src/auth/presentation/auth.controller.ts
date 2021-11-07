@@ -1,12 +1,16 @@
-import { Body, Controller, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Inject, Post, ValidationPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { AuthService } from 'auth/domain';
+import { IAuthService } from 'auth/domain';
 import { ResponseSignInRequestDto, SignUpBodyDTO, SingInBodyDto } from 'auth/presentation/dtos';
+import { AUTH_SERVICE } from 'auth/../constants';
 
 @ApiTags('AUTH')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    @Inject(AUTH_SERVICE)
+    private readonly authService: IAuthService
+  ) {}
 
   @ApiOkResponse({ type: ResponseSignInRequestDto })
   @Post('/signin')

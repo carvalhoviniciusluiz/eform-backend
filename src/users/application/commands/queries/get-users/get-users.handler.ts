@@ -2,12 +2,12 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { IUserRepository, IUser, TUserPropsWithoutPassword } from 'users/domain';
 import { GetUsersCommand } from 'users/application/commands/queries/get-Users';
-import { InjectionConstant } from 'users/injection.constant';
+import { USER_REPOSITORY } from 'users/../constants';
 
 @CommandHandler(GetUsersCommand)
 export class GetUsersHandler implements ICommandHandler<GetUsersCommand, [TUserPropsWithoutPassword[], number]> {
   constructor(
-    @Inject(InjectionConstant.USER_REPOSITORY)
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository
   ) {}
 

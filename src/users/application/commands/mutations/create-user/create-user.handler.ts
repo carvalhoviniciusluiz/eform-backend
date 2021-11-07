@@ -3,12 +3,12 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserFactory, IUserRepository } from 'users/domain';
 import { v4 as uuid } from 'uuid';
 import { CreateUserCommand } from 'users/application/commands/mutations/create-user';
-import { InjectionConstant } from 'users/injection.constant';
+import { USER_REPOSITORY } from 'users/../constants';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand, string> {
   constructor(
-    @Inject(InjectionConstant.USER_REPOSITORY)
+    @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
     private readonly userFactory: UserFactory
   ) {}

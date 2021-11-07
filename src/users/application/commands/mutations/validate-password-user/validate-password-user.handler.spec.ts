@@ -3,8 +3,8 @@ import { Test } from '@nestjs/testing';
 
 import { ValidatePasswordUserCommand } from 'users/application/commands/mutations/validate-password-user/validate-password-user.command';
 import { ValidatePasswordUserHandler } from 'users/application/commands/mutations/validate-password-user/validate-password-user.handle';
-import { InjectionConstant } from 'users/injection.constant';
 import { IUserRepository } from 'users/domain/user.repository';
+import { USER_REPOSITORY } from 'users/../constants';
 
 describe('ValidatePasswordUserHandler', () => {
   let handler: ValidatePasswordUserHandler;
@@ -12,7 +12,7 @@ describe('ValidatePasswordUserHandler', () => {
 
   beforeEach(async () => {
     const repoProvider: Provider = {
-      provide: InjectionConstant.USER_REPOSITORY,
+      provide: USER_REPOSITORY,
       useValue: {}
     };
     const providers: Provider[] = [ValidatePasswordUserHandler, repoProvider];
@@ -20,7 +20,7 @@ describe('ValidatePasswordUserHandler', () => {
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
     handler = testModule.get(ValidatePasswordUserHandler);
-    repository = testModule.get(InjectionConstant.USER_REPOSITORY);
+    repository = testModule.get(USER_REPOSITORY);
   });
 
   describe('execute', () => {

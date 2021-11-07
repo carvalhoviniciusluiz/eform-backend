@@ -3,10 +3,9 @@ import { Test } from '@nestjs/testing';
 
 import { GetUsersCommand } from 'users/application/commands/queries/get-users/get-users.command';
 import { GetUsersHandler } from 'users/application/commands/queries/get-users/get-users.handler';
-import { InjectionConstant } from 'users/injection.constant';
 import { IUserRepository } from 'users/domain/user.repository';
 import { IUser } from 'users/domain';
-
+import { USER_REPOSITORY } from 'users/../constants';
 import { v4 as uuid } from 'uuid';
 
 describe('GetUsersHandler', () => {
@@ -15,7 +14,7 @@ describe('GetUsersHandler', () => {
 
   beforeEach(async () => {
     const repoProvider: Provider = {
-      provide: InjectionConstant.USER_REPOSITORY,
+      provide: USER_REPOSITORY,
       useValue: {}
     };
     const providers: Provider[] = [GetUsersHandler, repoProvider];
@@ -23,7 +22,7 @@ describe('GetUsersHandler', () => {
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
     handler = testModule.get(GetUsersHandler);
-    repository = testModule.get(InjectionConstant.USER_REPOSITORY);
+    repository = testModule.get(USER_REPOSITORY);
   });
 
   describe('execute', () => {

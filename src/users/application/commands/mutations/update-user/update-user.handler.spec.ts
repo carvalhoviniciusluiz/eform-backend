@@ -3,9 +3,8 @@ import { Test } from '@nestjs/testing';
 
 import { UpdateUserCommand } from 'users/application/commands/mutations/update-user/update-user.command';
 import { UpdateUserHandler } from 'users/application/commands/mutations/update-user/update-user.handler';
-import { InjectionConstant } from 'users/injection.constant';
 import { UserFactory } from 'users/domain/user.factory';
-
+import { USER_REPOSITORY } from 'users/../constants';
 import { IUserRepository } from 'users/domain/user.repository';
 
 import { v4 as uuid } from 'uuid';
@@ -17,7 +16,7 @@ describe('UpdateUserHandler', () => {
 
   beforeEach(async () => {
     const repoProvider: Provider = {
-      provide: InjectionConstant.USER_REPOSITORY,
+      provide: USER_REPOSITORY,
       useValue: {}
     };
     const factoryProvider: Provider = {
@@ -29,7 +28,7 @@ describe('UpdateUserHandler', () => {
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
     handler = testModule.get(UpdateUserHandler);
-    repository = testModule.get(InjectionConstant.USER_REPOSITORY);
+    repository = testModule.get(USER_REPOSITORY);
     factory = testModule.get(UserFactory);
   });
 

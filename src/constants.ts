@@ -36,6 +36,10 @@ export const JWT_SECRET_REFRESHTOKEN =
 export const USER_REPOSITORY = 'IUserRepository';
 export const USER_SERVICE = 'IUserService';
 export const AUTH_SERVICE = 'IAuthService';
+export const STRATEGY_REGISTER = 'IStrategyRegister';
+
+// Decorators strategy
+export const AUTH_GRANT_STRATEGY = '__authGrantStrategy__';
 
 if (IS_DEV) {
   console.table(ENV_FILE);

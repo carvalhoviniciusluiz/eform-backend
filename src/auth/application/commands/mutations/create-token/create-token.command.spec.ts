@@ -1,12 +1,12 @@
-import { SignInCommand } from './sign-in.command';
+import { CreateTokenCommand } from './create-token.command';
 
-describe('SignInCommand', () => {
-  it('should get a SignInCommand instance', () => {
+describe('CreateTokenCommand', () => {
+  it('should get a CreateTokenCommand instance', () => {
     const avatar = 'avatar';
     const email = 'email';
     const firstname = 'firstname';
     const lastname = 'lastname';
-    const command = new SignInCommand({
+    const command = new CreateTokenCommand({
       avatar,
       email,
       firstname,
@@ -19,6 +19,6 @@ describe('SignInCommand', () => {
     expect(payload.email).toBe(email);
     expect(payload.firstname).toBe(firstname);
     expect(payload.lastname).toBe(lastname);
-    expect(command instanceof SignInCommand).toBe(true);
+    expect(command instanceof CreateTokenCommand).toBe(true);
   });
 });

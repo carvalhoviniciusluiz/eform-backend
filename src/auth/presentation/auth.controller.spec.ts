@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { IAuthService } from 'auth/domain';
+import { GrantTypeEnum, IAuthService } from 'auth/domain';
 import { AuthController } from 'auth/presentation';
 import { AUTH_SERVICE } from 'users/../constants';
 
@@ -22,18 +22,27 @@ describe('AuthController', () => {
     controller = module.get<AuthController>(AuthController);
   });
 
-  describe('signUp', () => {
+  describe('run', () => {
     it('should return undefined', async () => {
-      const returnValue = {
-        credential: 'credential',
-        password: 'password'
+      const serviceReturnValue = {
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken'
       };
 
-      service.signIn = jest.fn().mockReturnValue(undefined);
+      const grantType = GrantTypeEnum.password_grant;
 
-      await expect(controller.signIn(returnValue)).resolves.toBeUndefined();
-      expect(service.signIn).toBeCalledTimes(1);
-      expect(service.signIn).toBeCalledWith(returnValue.credential, returnValue.password);
+      const password = 'password';
+
+      const controllerReturnValue = {
+        body: { authorization: { accessToken: 'accessToken', refreshToken: 'refreshToken' }, status: 'success' },
+        statusCode: 200
+      };
+
+      service.run = jest.fn().mockReturnValue(serviceReturnValue);
+
+      await expect(controller.useStrategy({ grantType, password })).resolves.toEqual(controllerReturnValue);
+      expect(service.run).toBeCalledTimes(1);
+      expect(service.run).toBeCalledWith(grantType, { password });
     });
   });
 });

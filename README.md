@@ -24,10 +24,13 @@
 ## Objetivo:
 
 ## Requisitos técnicos
-- Desenvolver usando *Javascript*
+
+- Desenvolver usando _Javascript_
 - Serviço deve respeitar os princípios RESTFul
 - Criar um `README.md` (arquitetura, instruções de uso, entre outros)
+
 ## Diferenciais
+
 - Publicação do ambiente em um serviço cloud de hospedagens (Heroku, AWS, GCP, etc)
 - Configurar a aplicação para rodar em um container
 - Documentação da API
@@ -36,7 +39,7 @@
 
 ### **Requisitos:**
 
-- [NodeJs ``>16.0.0``](https://nodejs.org/en/).
+- [NodeJs `>16.0.0`](https://nodejs.org/en/).
 
 - [Docker Descktop](https://docs.docker.com/desktop/mac/install/)
 
@@ -55,31 +58,54 @@ Aplicação criada do zero usando [NestJs](https://nestjs.com/), conta com as se
 - Tests de TDD + e2e;
 - Outros
 
-__NOTA__: Todo o projeto está baseado na [arquitetura de modulos sugerida pelo Nestjs](https://docs.nestjs.com/modules)
+**NOTA**: Todo o projeto está baseado na [arquitetura de modulos sugerida pelo Nestjs](https://docs.nestjs.com/modules)
 
 ### **Instalação:**
+
 ```
 yarn
 ```
 
+### Endpoint _Auth_
+
+```bash
+grant_type = refresh_token
+  --> refresh_token
+
+grant_type = password_grant
+  --> credential
+  --> password
+
+grant_type = create_credentials
+  --> firstname
+  --> lastname
+  --> documentNumber
+  --> email
+  --> phone
+  --> password
+```
+
 ### **Tests:**
+
 ```shell
 yarn test && yarn test:e2e
 ```
 
 ### **Rodando o Projeto:**
+
 Este projeto está conteinerizado em Docker, com exceção do nodejs, você não precisa ter instalado localmente o banco de dados integrado ao sistema.
 
 Para subir o docker do projeto rode:
+
 ```bash
 docker-compose up
 ```
 
-__NOTA__: o projeto conta com todas as configurações realizadas a partir de variáveis ambiente. Você deve criar um arquivo ``.env`` a partir do ``.env.sample`` já existente no projeto.
+**NOTA**: o projeto conta com todas as configurações realizadas a partir de variáveis ambiente. Você deve criar um arquivo `.env` a partir do `.env.sample` já existente no projeto.
 
 ## :loop: Test API
 
-Este projeto possui sua api documentada com [swagger](https://swagger.io/) bastanto para tal acessar a rota [``http://localhost:3333/api/``](http://localhost:3333/api/)
+Este projeto possui sua api documentada com [swagger](https://swagger.io/) bastanto para tal acessar a rota [`http://localhost:3333/api/`](http://localhost:3333/api/)
 
 ## :memo: Licença
 

@@ -15,7 +15,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swag
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserBodyDTO, UpdateUserBodyDTO } from 'users/presentation';
 import { RequestPaginateDto } from 'common/dtos';
-import { PaginatedUserResultsDto } from 'users/presentation/dtos';
+import { PaginatedUserResponseDto } from 'users/presentation/dtos';
 import { IUserService } from 'users/domain';
 import { USER_SERVICE } from 'users/../constants';
 
@@ -29,17 +29,17 @@ export class UsersController {
     private readonly userService: IUserService
   ) {}
 
-  @ApiOkResponse({ type: PaginatedUserResultsDto })
+  @ApiOkResponse({ type: PaginatedUserResponseDto })
   @Get()
-  async find(@Query(ValidationPipe) paginateDto: RequestPaginateDto): Promise<PaginatedUserResultsDto> {
+  async find(@Query(ValidationPipe) paginateDto: RequestPaginateDto): Promise<PaginatedUserResponseDto> {
     const { page, pagesize } = paginateDto;
     const [rows, count] = await this.userService.find(page, pagesize);
-    return new PaginatedUserResultsDto(rows, count, page, pagesize);
+    return new PaginatedUserResponseDto(rows, count, page, pagesize);
   }
 
   @ApiResponse({ status: 200, description: 'Success' })
   @Post()
-  async store(@Body() body: CreateUserBodyDTO): Promise<void> {
+  async store(@Body(new ValidationPipe({ transform: true })) body: CreateUserBodyDTO): Promise<void> {
     await this.userService.save(body);
   }
 

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-export class ResponseUsersRequestDto {
+export class ResponseUserRequestDto {
   @ApiProperty({ example: '886bbb4a-7f6a-4122-8e60-7a60e93107dd' })
   @Expose()
   id: string;

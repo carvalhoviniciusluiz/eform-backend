@@ -1,17 +1,17 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { IUserRepository, IUser, TUserPropsWithoutPassword } from 'users/domain';
+import { IUserRepository, IUser, TUserWithoutPassword } from 'users/domain';
 import { GetUsersCommand } from 'users/application/commands/queries/get-Users';
 import { USER_REPOSITORY } from 'users/../constants';
 
 @CommandHandler(GetUsersCommand)
-export class GetUsersHandler implements ICommandHandler<GetUsersCommand, [TUserPropsWithoutPassword[], number]> {
+export class GetUsersHandler implements ICommandHandler<GetUsersCommand, [TUserWithoutPassword[], number]> {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(command: GetUsersCommand): Promise<[TUserPropsWithoutPassword[], number]> {
+  async execute(command: GetUsersCommand): Promise<[TUserWithoutPassword[], number]> {
     const [rows, count] = await this.userRepository.find(command.page, command.pagesize);
 
     const parsedRows = rows.map(this.filterResultProps);

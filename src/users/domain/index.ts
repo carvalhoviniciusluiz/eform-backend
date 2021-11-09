@@ -1,4 +1,5 @@
-export * from './protocols';
+export * from './interfaces';
+export * from './types';
 export * from './user.exception';
 export * from './user.factory';
 export * from './user.model';

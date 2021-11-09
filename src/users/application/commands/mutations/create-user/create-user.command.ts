@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
-import { TUserProps } from 'users/domain';
+import { TUser } from 'users/domain';
 
 export class CreateUserCommand implements ICommand {
-  constructor(readonly props: TUserProps) {}
+  constructor(readonly props: TUser) {}
 }

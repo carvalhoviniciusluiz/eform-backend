@@ -1,7 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import * as bcrypt from 'bcrypt';
 import { UserException } from 'users/domain';
-import { IUser, TUserEntityProps } from 'users/domain/protocols';
+import { IUser, TUserEntity } from 'users/domain';
 
 export class UserModel extends AggregateRoot implements IUser {
   private id?: string;
@@ -17,12 +17,12 @@ export class UserModel extends AggregateRoot implements IUser {
   private closedAt?: Date | null = null;
   private version = 0;
 
-  constructor(props: TUserEntityProps) {
+  constructor(props: TUserEntity) {
     super();
     Object.assign(this, props);
   }
 
-  props(): TUserEntityProps {
+  props(): TUserEntity {
     return {
       id: this.id,
       firstname: this.firstname,

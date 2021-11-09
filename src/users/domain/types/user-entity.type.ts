@@ -1,4 +1,4 @@
-export type TUserEntityProps = {
+export type TUserEntity = {
   readonly id?: string;
   readonly firstname?: string;
   readonly documentNumber?: string;

@@ -1,5 +1,5 @@
 import { getConnection } from 'typeorm';
-import { UserFactory, TUserEntityProps, IUserRepository, IUser } from 'users/domain';
+import { UserFactory, TUserEntity, IUserRepository, IUser } from 'users/domain';
 import { UserEntity } from 'users/infra';
 import { Inject } from '@nestjs/common';
 
@@ -53,7 +53,7 @@ export class UserRepository implements IUserRepository {
     await getConnection().createQueryBuilder().update(UserEntity).set(props).where('id = :id', { id }).execute();
   }
 
-  private getUserProps(model: IUser): TUserEntityProps {
+  private getUserProps(model: IUser): TUserEntity {
     const props = Object.entries(model.props()).filter(([, v]) => v);
     return Object.fromEntries(props);
   }

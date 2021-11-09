@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PaginatedResults, PaginatedBodyDto } from 'common/dtos';
-import { ResponseUsersRequestDto } from 'users/presentation/dtos';
+import { PaginatedResultDto, PaginatedBodyDto } from 'common/dtos';
+import { ResponseUserRequestDto } from 'users/presentation/dtos';
 
-export class PaginatedUserResultsDto extends PaginatedResults {
+export class PaginatedUserResponseDto extends PaginatedResultDto {
   @ApiProperty({ example: 200, type: Number })
   statusCode = 200;
 
@@ -24,7 +24,7 @@ export class PaginatedUserResultsDto extends PaginatedResults {
       ]
     }
   })
-  body: PaginatedBodyDto<ResponseUsersRequestDto>;
+  body: PaginatedBodyDto<ResponseUserRequestDto>;
 
   constructor(rows: any[], count: number, page: number, pageSize: number) {
     super(rows, count, page, pageSize);

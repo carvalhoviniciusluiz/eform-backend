@@ -1,3 +1,4 @@
-export * from './response-sign-in.request.dto';
-export * from './sign-up.body.dto';
-export * from './sing-in.body.dto';
+export * from './auth.body.dto';
+export * from './auth.response.dto';
+export * from './authorization-body.dto';
+export * from './request.response.dto';

@@ -1,32 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { CommandBus } from '@nestjs/cqrs';
-import { SignInCommand } from 'auth/application/commands';
-import { ValidatePasswordUserCommand } from 'users/application';
-import { AuthException, IAuthService, SignInProps } from 'auth/domain';
-import { IUser } from 'users/domain';
+import { Inject, Injectable } from '@nestjs/common';
+import { AuthException, GrantTypeEnum, IAuthService, TAuth } from 'auth/domain';
+import { IGrantStrategy, IStrategyRegistry } from 'common';
+import { STRATEGY_REGISTER } from 'auth/../constants';
 
 @Injectable()
 export class AuthService implements IAuthService {
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    @Inject(STRATEGY_REGISTER)
+    private readonly strategyRegistry: IStrategyRegistry
+  ) {}
 
-  async signIn(credential: string, password: string): Promise<SignInProps> {
-    const commandValidatePasswordUser = new ValidatePasswordUserCommand(credential, password);
-    const user = await this.commandBus.execute<ValidatePasswordUserCommand, IUser>(commandValidatePasswordUser);
+  async run(grantType: GrantTypeEnum, props: TAuth): Promise<any> {
+    const strategy: IGrantStrategy = this.strategyRegistry.getGrantStragety(grantType.toString());
 
-    if (!user) {
-      throw AuthException.unauthorizedForCredential(credential);
+    if (!strategy) {
+      throw AuthException.strategyNotFound(grantType.toString());
     }
 
-    const { email, firstname, lastname } = user.props();
-
-    const commandSignIn = new SignInCommand({
-      email,
-      firstname,
-      lastname,
-      avatar: 'https://avatars.githubusercontent.com/u/22005684?v=4'
-    });
-
-    const result = await this.commandBus.execute<SignInCommand, SignInProps>(commandSignIn);
-    return result;
+    return strategy.run(props);
   }
 }

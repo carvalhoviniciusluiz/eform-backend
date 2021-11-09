@@ -1,7 +1,7 @@
-import { Body, Controller, Inject, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { IAuthService } from 'auth/domain';
-import { ResponseSignInRequestDto, SignUpBodyDTO, SingInBodyDto } from 'auth/presentation/dtos';
+import { AuthBodyDto, RequestResponseDto } from 'auth/presentation/dtos';
 import { AUTH_SERVICE } from 'auth/../constants';
 
 @ApiTags('AUTH')
@@ -12,21 +12,15 @@ export class AuthController {
     private readonly authService: IAuthService
   ) {}
 
-  @ApiOkResponse({ type: ResponseSignInRequestDto })
-  @Post('/signin')
-  async signIn(
-    @Body(new ValidationPipe({ transform: true }))
-    body: SingInBodyDto
-  ): Promise<ResponseSignInRequestDto> {
-    const { credential, password } = body;
-    return this.authService.signIn(credential, password);
-  }
+  @ApiOkResponse({ type: RequestResponseDto })
+  @Post()
+  async useStrategy(
+    @Body()
+    body: AuthBodyDto
+  ): Promise<RequestResponseDto> {
+    const { grantType, ...props } = body;
 
-  @Post('/signup')
-  async signUp(
-    @Body(new ValidationPipe({ transform: true }))
-    body: SignUpBodyDTO
-  ): Promise<void> {
-    console.log(body);
+    const rows = await this.authService.run(grantType, props);
+    return new RequestResponseDto(rows);
   }
 }

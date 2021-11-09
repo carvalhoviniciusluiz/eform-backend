@@ -1,15 +1,30 @@
 import { CqrsModule } from '@nestjs/cqrs';
-import { Logger, Module } from '@nestjs/common';
+import { Inject, Logger, Module, OnModuleInit } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { AuthController } from 'auth/presentation';
-import { AuthService } from 'auth/domain/auth.service';
+import {
+  AuthController,
+  PasswordGrantStrategy,
+  RefreshTokenStrategy,
+  CreateCredentialsStrategy
+} from 'auth/presentation';
+import { AuthService } from 'auth/domain';
+import { IStrategyRegistry } from 'common';
 import { JwtStrategy } from 'auth/infra';
+import { CreateTokenHandler, TokenDecodedHandler, TokenExpiredHandler } from 'auth/application/commands';
 import { UserFactory, UserService } from 'users/domain';
-import { SignInHandler } from 'auth/application/commands';
 import { ValidatePasswordUserHandler } from 'users/application';
 import { UserRepository } from 'users/infra';
-import { USER_REPOSITORY, AUTH_SERVICE, USER_SERVICE, JWT_SECRET, JWT_SECRET_EXPIRES_IN } from 'auth/../constants';
+import {
+  AUTH_SERVICE,
+  USER_REPOSITORY,
+  USER_SERVICE,
+  JWT_SECRET,
+  JWT_SECRET_EXPIRES_IN,
+  STRATEGY_REGISTER,
+  AUTH_GRANT_STRATEGY
+} from 'auth/../constants';
+import { StrategyExplorer, StrategyRegistry } from 'common';
 
 const infrastructure = [
   JwtStrategy,
@@ -18,7 +33,7 @@ const infrastructure = [
     useClass: UserRepository
   }
 ];
-const application = [SignInHandler, ValidatePasswordUserHandler];
+const application = [CreateTokenHandler, TokenDecodedHandler, TokenExpiredHandler, ValidatePasswordUserHandler];
 const domain = [
   {
     provide: AUTH_SERVICE,
@@ -29,6 +44,16 @@ const domain = [
     useClass: UserService
   },
   UserFactory
+];
+const presentation = [
+  StrategyExplorer,
+  {
+    provide: STRATEGY_REGISTER,
+    useClass: StrategyRegistry
+  },
+  PasswordGrantStrategy,
+  RefreshTokenStrategy,
+  CreateCredentialsStrategy
 ];
 
 @Module({
@@ -44,8 +69,19 @@ const domain = [
     }),
     CqrsModule
   ],
-  providers: [Logger, ...infrastructure, ...application, ...domain],
+  providers: [Logger, ...infrastructure, ...application, ...domain, ...presentation],
   controllers: [AuthController],
   exports: [PassportModule]
 })
-export class AuthModule {}
+export class AuthModule implements OnModuleInit {
+  constructor(
+    @Inject(STRATEGY_REGISTER)
+    private readonly strategyRegistry: IStrategyRegistry,
+    private readonly strategyExplorer: StrategyExplorer
+  ) {}
+
+  onModuleInit() {
+    const { strategies } = this.strategyExplorer.explore(AUTH_GRANT_STRATEGY);
+    this.strategyRegistry.register(AUTH_GRANT_STRATEGY, strategies);
+  }
+}

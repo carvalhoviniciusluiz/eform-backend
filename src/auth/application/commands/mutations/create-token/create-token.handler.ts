@@ -1,21 +1,21 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
-import { SignInCommand } from 'auth/application/commands/mutations/sign-in';
-import { SignInProps } from 'auth/domain';
+import { CreateTokenCommand } from 'auth/application/commands/mutations/create-token';
+import { TCreateToken } from 'auth/domain';
 import { JWT_SECRET_REFRESHTOKEN_EXPIRES_IN, JWT_SECRET_REFRESHTOKEN } from 'auth/../constants';
 
-type DecodedProps = {
+type TDecoded = {
   exp: number;
 };
 
-@CommandHandler(SignInCommand)
-export class SignInHandler implements ICommandHandler<SignInCommand, SignInProps> {
+@CommandHandler(CreateTokenCommand)
+export class CreateTokenHandler implements ICommandHandler<CreateTokenCommand, TCreateToken> {
   constructor(private jwtService: JwtService) {}
 
-  async execute(command: SignInCommand): Promise<SignInProps> {
+  async execute(command: CreateTokenCommand): Promise<TCreateToken> {
     const { payload } = command;
     const accessToken = this.jwtService.sign(payload);
-    const accessTokenDecoded = this.jwtService.decode(accessToken) as DecodedProps;
+    const accessTokenDecoded = this.jwtService.decode(accessToken) as TDecoded;
     const accessTokenExpiresIn = accessTokenDecoded.exp;
 
     const refreshTokenOptions: JwtSignOptions = {
@@ -24,7 +24,7 @@ export class SignInHandler implements ICommandHandler<SignInCommand, SignInProps
     };
 
     const refreshToken = this.jwtService.sign(payload, refreshTokenOptions);
-    const refreshTokenDecoded = this.jwtService.decode(refreshToken) as DecodedProps;
+    const refreshTokenDecoded = this.jwtService.decode(refreshToken) as TDecoded;
     const refreshTokenExpiresIn = refreshTokenDecoded.exp;
 
     return {

@@ -1,4 +1,4 @@
-export type SignInProps = {
+export type TCreateToken = {
   accessToken: string;
   accessTokenExpiresIn: number;
   refreshToken: string;

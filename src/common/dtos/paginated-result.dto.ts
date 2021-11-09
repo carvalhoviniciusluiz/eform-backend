@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PaginatedMetaDto } from 'common/dtos';
 
-export class PaginatedResults {
+export class PaginatedResultDto {
   @ApiProperty({
     example: {
       meta: {

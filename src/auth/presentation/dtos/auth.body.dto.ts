@@ -92,16 +92,13 @@ export class AuthBodyDto {
   @ApiProperty({
     type: String,
     description: 'The document_number only when grant_type is set to "create_credentials"',
-    minLength: 11,
-    maxLength: 11,
     example: '742.804.627-04',
     name: 'document_number'
   })
   @IsOptional()
   @IsString()
-  @MinLength(11)
-  @MaxLength(11)
   @Expose({ name: 'document_number' })
+  @Transform(({ value }) => value.replace(/[^0-9]/g, ''))
   documentNumber?: string;
 
   @ApiProperty({

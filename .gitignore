@@ -2,7 +2,10 @@
 /dist
 /node_modules
 .env
+.env.remote
+.env.local
 .data
+.docker
 
 # Logs
 logs

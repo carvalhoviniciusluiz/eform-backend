@@ -1,6 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import * as bcrypt from 'bcrypt';
-import { UserException } from 'users/domain';
 import { IUser, TUserEntity } from 'users/domain';
 
 export class UserModel extends AggregateRoot implements IUser {
@@ -43,21 +42,27 @@ export class UserModel extends AggregateRoot implements IUser {
   createAccount(password: string): void {
     const hasDocumentNumber = !!this.documentNumber;
 
-    if (!hasDocumentNumber) throw UserException.canNotCreateUser(this.id);
+    if (!hasDocumentNumber) {
+      throw { userId: this.id };
+    }
 
     this.salt = bcrypt.genSaltSync();
     this.passwordHash = bcrypt.hashSync(password, this.salt);
   }
 
   closeAccount(password: string): void {
-    if (!this.comparePassword(password)) throw UserException.unauthorizedForId(this.id);
+    if (!this.comparePassword(password)) {
+      throw { userId: this.id };
+    }
 
     this.closedAt = new Date();
     this.version = this.version + 1;
   }
 
   updatePassword(password: string, newPassword: string): void {
-    if (!this.comparePassword(password)) throw UserException.unauthorizedForId(this.id);
+    if (!this.comparePassword(password)) {
+      throw { userId: this.id };
+    }
 
     this.salt = bcrypt.genSaltSync();
     this.passwordHash = bcrypt.hashSync(newPassword, this.salt);

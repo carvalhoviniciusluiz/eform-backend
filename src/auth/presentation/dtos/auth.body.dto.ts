@@ -9,6 +9,7 @@ export class AuthBodyDto {
     description:
       'The type of grant you are requesting, must be "password_grant" | "refresh_token" | "create_credentials"',
     example: 'password_grant',
+    name: 'grant_type',
     required: true
   })
   @IsNotEmpty()
@@ -90,10 +91,11 @@ export class AuthBodyDto {
 
   @ApiProperty({
     type: String,
-    description: 'The documentNumber only when grant_type is set to "create_credentials"',
+    description: 'The document_number only when grant_type is set to "create_credentials"',
     minLength: 11,
     maxLength: 11,
-    example: '742.804.627-04'
+    example: '742.804.627-04',
+    name: 'document_number'
   })
   @IsOptional()
   @IsString()

@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateUserBodyDTO, UpdateUserBodyDTO } from 'users/presentation';
+import { CreateUserBodyDTO, UpdateUserBodyDTO, UserException } from 'users/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedUserResponseDto } from 'users/presentation/dtos';
 import { IUserService } from 'users/domain';
@@ -40,7 +40,11 @@ export class UsersController {
   @ApiResponse({ status: 200, description: 'Success' })
   @Post()
   async store(@Body(new ValidationPipe({ transform: true })) body: CreateUserBodyDTO): Promise<void> {
-    await this.userService.save(body);
+    try {
+      await this.userService.save(body);
+    } catch (error) {
+      throw UserException.canNotCreateUser(error.userId);
+    }
   }
 
   @ApiResponse({ status: 200, description: 'Success' })

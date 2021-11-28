@@ -20,10 +20,23 @@ export const IS_DEV = !IS_TEST && !IS_PROD;
 // Dotenv
 export const POSTGRES_DB = configService.get<string>('POSTGRES_DB');
 export const POSTGRES_HOST = IS_TEST ? '0.0.0.0' : configService.get<string>('POSTGRES_HOST');
+export const POSTGRES_PORT = configService.get<number>('POSTGRES_PORT');
 export const POSTGRES_USER = configService.get<string>('POSTGRES_USER');
 export const POSTGRES_PASSWORD = configService.get<string>('POSTGRES_PASSWORD');
 
-export const REJECT_UNAUTHORIZED = configService.get<string>('REJECT_UNAUTHORIZED') || 'false';
+export const MONGODB_URL = configService.get<string>('MONGODB_URL');
+
+export const REDIS_HOSTNAME = configService.get<string>('REDIS_HOSTNAME');
+export const REDIS_PORT = configService.get<number>('REDIS_PORT');
+export const REDIS_PASSWORD = configService.get<string>('REDIS_PASSWORD');
+
+export const MAIL_HOST = configService.get<string>('MAIL_HOST');
+export const MAIL_PORT = configService.get<number>('MAIL_PORT');
+export const MAIL_USER = configService.get<string>('MAIL_USER');
+export const MAIL_PASS = configService.get<string>('MAIL_PASS');
+export const MAIL_FROM = configService.get<string>('MAIL_FROM');
+
+export const SSL = configService.get<string>('SSL') || 'false';
 
 export const JWT_SECRET = configService.get<string>('JWT_SECRET') || 'jwt-secret';
 export const JWT_SECRET_EXPIRES_IN = configService.get<string>('JWT_SECRET_EXPIRES_IN') || '5m';

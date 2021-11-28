@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AuthException, GrantTypeEnum, IAuthService, TAuth } from 'auth/domain';
+import { GrantTypeEnum, IAuthService, TAuth } from 'auth/domain';
 import { IGrantStrategy, IStrategyRegistry } from 'common';
 import { STRATEGY_REGISTER } from 'auth/../constants';
 
@@ -14,7 +14,7 @@ export class AuthService implements IAuthService {
     const strategy: IGrantStrategy = this.strategyRegistry.getGrantStragety(grantType.toString());
 
     if (!strategy) {
-      throw AuthException.strategyNotFound(grantType.toString());
+      throw { grant_type: grantType.toString() };
     }
 
     return strategy.run(props);

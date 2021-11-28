@@ -1,3 +1,4 @@
+export * from './cache';
 export * from './dtos';
 export * from './entities';
 export * from './filters';

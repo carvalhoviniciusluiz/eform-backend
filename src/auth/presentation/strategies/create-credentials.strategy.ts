@@ -1,7 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { IGrantStrategy } from 'common';
 import { AuthGrantStrategy } from 'auth/presentation';
-import { AuthException } from 'auth/domain';
 import { CreateUserCommand } from 'users/application';
 
 type TRequest = {
@@ -18,7 +17,7 @@ export class CreateCredentialsStrategy implements IGrantStrategy {
     const isValid = !!documentNumber && !!password;
 
     if (!isValid) {
-      throw AuthException.unauthorized();
+      throw { unauthorized: true };
     }
   }
 

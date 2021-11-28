@@ -15,32 +15,24 @@ import { CreateTokenHandler, TokenDecodedHandler, TokenExpiredHandler } from 'au
 import { UserFactory, UserService } from 'users/domain';
 import { ValidatePasswordUserHandler } from 'users/application';
 import { UserRepository } from 'users/infra';
-import {
-  AUTH_SERVICE,
-  USER_REPOSITORY,
-  USER_SERVICE,
-  JWT_SECRET,
-  JWT_SECRET_EXPIRES_IN,
-  STRATEGY_REGISTER,
-  AUTH_GRANT_STRATEGY
-} from 'auth/../constants';
+import * as ENV from 'auth/../constants';
 import { StrategyExplorer, StrategyRegistry } from 'common';
 
 const infrastructure = [
   JwtStrategy,
   {
-    provide: USER_REPOSITORY,
+    provide: ENV.USER_REPOSITORY,
     useClass: UserRepository
   }
 ];
 const application = [CreateTokenHandler, TokenDecodedHandler, TokenExpiredHandler, ValidatePasswordUserHandler];
 const domain = [
   {
-    provide: AUTH_SERVICE,
+    provide: ENV.AUTH_SERVICE,
     useClass: AuthService
   },
   {
-    provide: USER_SERVICE,
+    provide: ENV.USER_SERVICE,
     useClass: UserService
   },
   UserFactory
@@ -48,7 +40,7 @@ const domain = [
 const presentation = [
   StrategyExplorer,
   {
-    provide: STRATEGY_REGISTER,
+    provide: ENV.STRATEGY_REGISTER,
     useClass: StrategyRegistry
   },
   PasswordGrantStrategy,
@@ -62,9 +54,9 @@ const presentation = [
       defaultStrategy: 'jwt'
     }),
     JwtModule.register({
-      secret: JWT_SECRET,
+      secret: ENV.JWT_SECRET,
       signOptions: {
-        expiresIn: JWT_SECRET_EXPIRES_IN
+        expiresIn: ENV.JWT_SECRET_EXPIRES_IN
       }
     }),
     CqrsModule
@@ -75,13 +67,13 @@ const presentation = [
 })
 export class AuthModule implements OnModuleInit {
   constructor(
-    @Inject(STRATEGY_REGISTER)
+    @Inject(ENV.STRATEGY_REGISTER)
     private readonly strategyRegistry: IStrategyRegistry,
     private readonly strategyExplorer: StrategyExplorer
   ) {}
 
   onModuleInit() {
-    const { strategies } = this.strategyExplorer.explore(AUTH_GRANT_STRATEGY);
-    this.strategyRegistry.register(AUTH_GRANT_STRATEGY, strategies);
+    const { strategies } = this.strategyExplorer.explore(ENV.AUTH_GRANT_STRATEGY);
+    this.strategyRegistry.register(ENV.AUTH_GRANT_STRATEGY, strategies);
   }
 }

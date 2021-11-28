@@ -3,7 +3,7 @@ import * as ENV from './constants';
 
 let options: TypeOrmModuleOptions = {};
 
-if (ENV.REJECT_UNAUTHORIZED === 'true') {
+if (ENV.SSL === 'true') {
   options = {
     ssl: {
       rejectUnauthorized: false
@@ -18,6 +18,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: ENV.POSTGRES_USER,
   password: ENV.POSTGRES_PASSWORD,
   database: ENV.POSTGRES_DB,
+  port: ENV.POSTGRES_PORT,
   entities: [`${__dirname}/**/*.entity.{js,ts}`],
   synchronize: ENV.IS_DEV,
   logging: ENV.IS_DEV

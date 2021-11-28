@@ -2,7 +2,6 @@ import { IGrantStrategy } from 'common';
 import { AuthGrantStrategy } from 'auth/presentation';
 import { CommandBus } from '@nestjs/cqrs';
 import { TokenExpiredCommand, TokenDecodedCommand, CreateTokenCommand } from 'auth/application';
-import { AuthException } from 'auth/domain';
 
 type TRequest = {
   refreshToken: string;
@@ -36,7 +35,7 @@ export class RefreshTokenStrategy implements IGrantStrategy {
     const isExpired = await this.commandBus.execute(command);
 
     if (isExpired) {
-      throw AuthException.unauthorized('token expired');
+      throw { expired: true };
     }
   }
 

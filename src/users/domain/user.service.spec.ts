@@ -1,4 +1,4 @@
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { UserService } from 'users/domain';
 
@@ -13,6 +13,12 @@ describe('UserService', () => {
         UserService,
         {
           provide: CommandBus,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: QueryBus,
           useValue: {
             execute: jest.fn()
           }

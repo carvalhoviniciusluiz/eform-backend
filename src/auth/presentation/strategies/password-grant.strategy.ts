@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { IGrantStrategy } from 'common';
 import { AuthGrantStrategy } from 'auth/presentation';
-import { AuthException, TAuth, TCreateToken } from 'auth/domain';
+import { TAuth, TCreateToken } from 'auth/domain';
 import { CreateTokenCommand } from 'auth/application';
 import { ValidatePasswordUserCommand } from 'users/application';
 import { IUser } from 'users/domain';
@@ -14,7 +14,7 @@ export class PasswordGrantStrategy implements IGrantStrategy {
     const commandValidatePasswordUser = new ValidatePasswordUserCommand(credential, password);
     const user = await this.commandBus.execute(commandValidatePasswordUser);
     if (!user) {
-      throw AuthException.unauthorized();
+      throw { unauthorized: true };
     }
 
     return user;

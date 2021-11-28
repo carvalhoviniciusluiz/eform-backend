@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Inject, InternalServerErrorException, Post } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { IAuthService } from 'auth/domain';
 import { AuthBodyDto, RequestResponseDto } from 'auth/presentation/dtos';
@@ -39,6 +39,7 @@ export class AuthController {
       if (error.documentNumberExists) {
         throw AuthException.documentNumberAlreadyRegistered(error.documentNumber);
       }
+      throw new InternalServerErrorException();
     }
   }
 }

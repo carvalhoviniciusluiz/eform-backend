@@ -48,6 +48,9 @@ export class UserModel extends AggregateRoot implements IUser {
 
     this.salt = bcrypt.genSaltSync();
     this.passwordHash = bcrypt.hashSync(password, this.salt);
+
+    // TODO:
+    // this.apply(Object.assign(new SendEmailConfirmationEvent(), this));
   }
 
   closeAccount(password: string): void {

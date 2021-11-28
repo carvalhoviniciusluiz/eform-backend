@@ -55,14 +55,23 @@ export class UserRepository implements IUserRepository {
     return user;
   }
 
-  async save(data: IUser): Promise<void> {
+  async save(data: IUser): Promise<Date | null> {
     const props = this.getUserProps(data);
-    await getConnection().createQueryBuilder().insert().into(UserEntity).values([props]).execute();
+    const row = await getConnection().createQueryBuilder().insert().into(UserEntity).values([props]).execute();
+    const user = row?.raw[0];
+    return user?.created_at;
   }
 
-  async update(id: string, data: IUser): Promise<void> {
+  async update(id: string, data: IUser): Promise<Date | null> {
     const props = this.getUserProps(data);
-    await getConnection().createQueryBuilder().update(UserEntity).set(props).where('id = :id', { id }).execute();
+    const row = await getConnection()
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set(props)
+      .where('id = :id', { id })
+      .execute();
+    const user = row?.raw[0];
+    return user?.updated_at;
   }
 
   private getUserProps(model: IUser): TUserEntity {

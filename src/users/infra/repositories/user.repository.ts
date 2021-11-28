@@ -19,6 +19,18 @@ export class UserRepository implements IUserRepository {
     return [results, count];
   }
 
+  async findByDocumentNumber(documentNumber: string): Promise<null | IUser> {
+    const row = await getConnection()
+      .createQueryBuilder()
+      .select('user')
+      .from(UserEntity, 'user')
+      .where('user.document_number = :documentNumber', { documentNumber })
+      .getOne();
+
+    const user = this.entityToModel(row);
+    return user;
+  }
+
   async findByCredential(credetial: string): Promise<IUser | null> {
     const row = await getConnection()
       .createQueryBuilder()

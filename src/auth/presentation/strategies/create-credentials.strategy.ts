@@ -25,6 +25,10 @@ export class CreateCredentialsStrategy implements IGrantStrategy {
     this.throwExceptionIfInvalid(body);
 
     const createUserCommand = new CreateUserCommand(body);
-    this.commandBus.execute(createUserCommand);
+    try {
+      await this.commandBus.execute(createUserCommand);
+    } catch (error) {
+      throw error;
+    }
   }
 }

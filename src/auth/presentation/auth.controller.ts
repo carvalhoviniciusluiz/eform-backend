@@ -33,6 +33,12 @@ export class AuthController {
       if (error.unauthorized) {
         throw AuthException.unauthorized();
       }
+      if (error.emailExists) {
+        throw AuthException.emailAlreadyRegistered(error.email);
+      }
+      if (error.documentNumberExists) {
+        throw AuthException.documentNumberAlreadyRegistered(error.documentNumber);
+      }
     }
   }
 }

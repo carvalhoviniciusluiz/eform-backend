@@ -38,6 +38,8 @@ describe('CreateUserHandler', () => {
 
       factory.create = jest.fn().mockReturnValue(account);
       repository.save = jest.fn().mockResolvedValue(undefined);
+      repository.findByEmail = jest.fn().mockResolvedValue(undefined);
+      repository.findByDocumentNumber = jest.fn().mockResolvedValue(undefined);
 
       const command = new CreateUserCommand({ password });
 

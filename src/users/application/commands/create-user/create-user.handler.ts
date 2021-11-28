@@ -16,6 +16,22 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand, str
   async execute(command: CreateUserCommand): Promise<string> {
     const { props } = command;
 
+    const foundEmail = await this.userRepository.findByEmail(props.email);
+    if (foundEmail) {
+      throw {
+        emailExists: true,
+        email: props.email
+      };
+    }
+
+    const foundDocumentNumber = await this.userRepository.findByDocumentNumber(props.documentNumber);
+    if (foundDocumentNumber) {
+      throw {
+        documentNumberExists: true,
+        documentNumber: props.documentNumber
+      };
+    }
+
     const id = uuid();
 
     const user = this.userFactory.create({

@@ -2,14 +2,14 @@ import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
 import { FindUsersQuery } from 'users/application/queries/find-users/find-users.query';
-import { GetUsersHandler } from 'users/application/queries/find-users/find-users.handler';
+import { FindUsersHandler } from 'users/application/queries/find-users/find-users.handler';
 import { IUserRepository } from 'users/domain/user.repository';
 import { IUser } from 'users/domain';
 import { USER_REPOSITORY } from 'users/../constants';
 import { v4 as uuid } from 'uuid';
 
-describe('GetUsersHandler', () => {
-  let handler: GetUsersHandler;
+describe('FindUsersHandler', () => {
+  let handler: FindUsersHandler;
   let repository: IUserRepository;
 
   beforeEach(async () => {
@@ -17,11 +17,11 @@ describe('GetUsersHandler', () => {
       provide: USER_REPOSITORY,
       useValue: {}
     };
-    const providers: Provider[] = [GetUsersHandler, repoProvider];
+    const providers: Provider[] = [FindUsersHandler, repoProvider];
     const moduleMetadata: ModuleMetadata = { providers };
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
-    handler = testModule.get(GetUsersHandler);
+    handler = testModule.get(FindUsersHandler);
     repository = testModule.get(USER_REPOSITORY);
   });
 

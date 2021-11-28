@@ -5,7 +5,7 @@ import { FindUsersQuery } from 'users/application/queries/find-Users';
 import { USER_REPOSITORY } from 'users/../constants';
 
 @QueryHandler(FindUsersQuery)
-export class GetUsersHandler implements IQueryHandler<FindUsersQuery, [TUserWithoutPassword[], number]> {
+export class FindUsersHandler implements IQueryHandler<FindUsersQuery, [TUserWithoutPassword[], number]> {
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository

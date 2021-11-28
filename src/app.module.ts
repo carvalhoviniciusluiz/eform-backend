@@ -17,8 +17,8 @@ import * as ENV from './constants';
     CacheModule.registerAsync({
       useClass: CacheService
     }),
-    TypeOrmModule.forRoot(typeOrmConfig),
     MailerModule.forRoot(mailerConfig),
+    TypeOrmModule.forRoot(typeOrmConfig),
     MongooseModule.forRoot(ENV.MONGODB_URL),
     RootModule,
     UsersModule,

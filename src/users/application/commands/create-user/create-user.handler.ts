@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UserFactory, IUserRepository } from 'users/domain';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
+import { UserFactory, IUserRepository, AddSendEmailJobEvent } from 'users/domain';
+import { EmailTypeEnum } from 'users/domain/enums';
 import { v4 as uuid } from 'uuid';
 import { CreateUserCommand } from 'users/application/commands/create-user';
 import { USER_REPOSITORY } from 'users/../constants';
@@ -10,7 +11,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand, str
   constructor(
     @Inject(USER_REPOSITORY)
     private readonly userRepository: IUserRepository,
-    private readonly userFactory: UserFactory
+    private readonly userFactory: UserFactory,
+    private readonly eventBus: EventBus
   ) {}
 
   async execute(command: CreateUserCommand): Promise<string> {
@@ -48,7 +50,22 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand, str
 
     user.createAccount(props.password);
 
-    await this.userRepository.save(user);
+    const { firstname, documentNumber, lastname, email, phone } = user.props();
+
+    const createdAt = await this.userRepository.save(user);
+
+    this.eventBus.publish(
+      Object.assign(new AddSendEmailJobEvent(), {
+        emailType: EmailTypeEnum.CONFIRMATION,
+        password: props.password,
+        firstname,
+        documentNumber,
+        lastname,
+        email,
+        phone,
+        createdAt
+      })
+    );
 
     return id;
   }

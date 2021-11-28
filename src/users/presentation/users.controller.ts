@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  InternalServerErrorException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -43,7 +44,10 @@ export class UsersController {
     try {
       await this.userService.save(body);
     } catch (error) {
-      throw UserException.canNotCreateUser(error.userId);
+      if (error.userId) {
+        throw UserException.canNotCreateUser(error.userId);
+      }
+      throw new InternalServerErrorException();
     }
   }
 

@@ -1,8 +1,8 @@
 <h1 align="center">
-  ## Edaily#Backend
+  ## E#Form#Backend
 </h1>
 
-<blockquote align="center">“Ninguém joga pedra em árvore que não da fruto”!</blockquote>
+<blockquote align="center">“A verdade do tempo é que tudo passa”!</blockquote>
 
 <p align="center">
   <img alt="challenge" src="https://img.shields.io/badge/challenge-%2304D361">

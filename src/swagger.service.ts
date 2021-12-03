@@ -5,8 +5,8 @@ import * as ENV from './constants';
 export const enableSwagger = (app: INestApplication, path = 'api') => {
   const swaggerDocumentBuilder = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('API Edaily-Backend')
-    .setDescription('This is our Edaily-Backend API')
+    .setTitle('API E-form-Backend')
+    .setDescription('This is our E-form-Backend API')
     .setVersion(`${ENV.VERSION}.${ENV.MAJOR}`)
     .build();
 

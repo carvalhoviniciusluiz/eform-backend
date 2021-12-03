@@ -1,7 +1,7 @@
 {
-  "name": "edaily-backend-api",
+  "name": "eform-backend-api",
   "version": "0.0.1",
-  "description": "This is our Edaily-Backend API",
+  "description": "This is our eForm-Backend API",
   "author": "Carvalho, Vinicius Luiz <carvalho.viniciusluiz@gmail.com>",
   "private": true,
   "license": "MIT",

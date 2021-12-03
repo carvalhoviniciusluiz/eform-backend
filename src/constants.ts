@@ -17,6 +17,8 @@ export const IS_PROD = NODE_ENV === 'production';
 export const IS_TEST = NODE_ENV === 'test';
 export const IS_DEV = !IS_TEST && !IS_PROD;
 
+export const TABLE_PREFIX = configService.get<string>('TABLE_PREFIX');
+
 // Dotenv
 export const POSTGRES_DB = configService.get<string>('POSTGRES_DB');
 export const POSTGRES_HOST = IS_TEST ? '0.0.0.0' : configService.get<string>('POSTGRES_HOST');

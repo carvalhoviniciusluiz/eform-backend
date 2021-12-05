@@ -9,6 +9,10 @@ import { mailerConfig } from './mailerconfig';
 import { RootModule } from './root/root.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { SurveysModule } from './surveys/surveys.module';
+import { QuestionsModule } from './questions/questions.module';
+import { AnswersModule } from './answers/answers.module';
+import { FormsModule } from './forms/forms.module';
 
 import * as ENV from './constants';
 
@@ -21,8 +25,12 @@ import * as ENV from './constants';
     TypeOrmModule.forRoot(typeOrmConfig),
     MongooseModule.forRoot(ENV.MONGODB_URL),
     RootModule,
+    AuthModule,
     UsersModule,
-    AuthModule
+    SurveysModule,
+    QuestionsModule,
+    AnswersModule,
+    FormsModule
   ],
   providers: [
     {

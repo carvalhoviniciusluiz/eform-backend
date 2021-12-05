@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { GrantTypeEnum, IAuthService } from 'auth/domain';
 import { AuthController } from 'auth/presentation';
-import { AUTH_SERVICE } from 'users/../constants';
+import { AUTH_SERVICE } from '../../constants';
 
 describe('AuthController', () => {
   let controller: AuthController;

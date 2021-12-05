@@ -4,8 +4,8 @@ import { Test } from '@nestjs/testing';
 import { UpdateUserCommand } from 'users/application/commands/update-user/update-user.command';
 import { UpdateUserHandler } from 'users/application/commands/update-user/update-user.handler';
 import { UserFactory } from 'users/domain/user.factory';
-import { USER_REPOSITORY } from 'users/../constants';
 import { IUserRepository } from 'users/domain/user.repository';
+import { USER_REPOSITORY } from '../../../../constants';
 
 import { v4 as uuid } from 'uuid';
 

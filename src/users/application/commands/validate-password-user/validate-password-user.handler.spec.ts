@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { ValidatePasswordUserCommand } from 'users/application/commands/validate-password-user/validate-password-user.command';
 import { ValidatePasswordUserHandler } from 'users/application/commands/validate-password-user/validate-password-user.handle';
 import { IUserRepository } from 'users/domain/user.repository';
-import { USER_REPOSITORY } from 'users/../constants';
+import { USER_REPOSITORY } from '../../../../constants';
 
 describe('ValidatePasswordUserHandler', () => {
   let handler: ValidatePasswordUserHandler;

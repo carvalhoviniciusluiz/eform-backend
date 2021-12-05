@@ -4,7 +4,7 @@ import { UserFactory, IUserRepository, AddSendEmailJobEvent } from 'users/domain
 import { EmailTypeEnum } from 'users/domain/enums';
 import { v4 as uuid } from 'uuid';
 import { CreateUserCommand } from 'users/application/commands/create-user';
-import { USER_REPOSITORY } from 'users/../constants';
+import { USER_REPOSITORY } from '../../../../constants';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand, string> {

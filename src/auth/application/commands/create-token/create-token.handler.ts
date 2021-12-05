@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { CreateTokenCommand } from 'auth/application/commands/create-token';
 import { TCreateToken } from 'auth/domain';
-import * as ENV from 'auth/../constants';
+import * as ENV from '../../../../constants';
 
 type TDecoded = {
   exp: number;

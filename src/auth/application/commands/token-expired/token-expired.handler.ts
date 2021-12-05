@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { TokenExpiredCommand } from 'auth/application/commands/token-expired';
-import * as ENV from 'auth/../constants';
+import * as ENV from '../../../../constants';
 
 @CommandHandler(TokenExpiredCommand)
 export class TokenExpiredHandler implements ICommandHandler<TokenExpiredCommand, boolean> {

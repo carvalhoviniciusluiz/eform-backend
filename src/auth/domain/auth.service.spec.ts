@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { AuthService, GrantTypeEnum } from 'auth/domain';
-import { STRATEGY_REGISTER } from 'auth/../constants';
+import { STRATEGY_REGISTER } from '../../constants';
 
 describe('AuthService', () => {
   let service: AuthService;

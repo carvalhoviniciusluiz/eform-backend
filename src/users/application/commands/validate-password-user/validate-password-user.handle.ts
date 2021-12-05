@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ValidatePasswordUserCommand } from 'users/application/commands/validate-password-user';
 import { Inject } from '@nestjs/common';
 import { IUser, IUserRepository } from 'users/domain';
-import { USER_REPOSITORY } from 'users/../constants';
+import { USER_REPOSITORY } from '../../../../constants';
 
 @CommandHandler(ValidatePasswordUserCommand)
 export class ValidatePasswordUserHandler implements ICommandHandler<ValidatePasswordUserCommand, IUser | boolean> {

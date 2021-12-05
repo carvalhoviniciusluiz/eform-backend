@@ -4,9 +4,9 @@ import { Test } from '@nestjs/testing';
 import { CreateUserCommand } from 'users/application/commands/create-user/create-user.command';
 import { CreateUserHandler } from 'users/application/commands/create-user/create-user.handler';
 import { UserFactory } from 'users/domain/user.factory';
-import { USER_REPOSITORY } from 'users/../constants';
 import { IUserRepository } from 'users/domain/user.repository';
 import { EventBus } from '@nestjs/cqrs';
+import { USER_REPOSITORY } from '../../../../constants';
 
 describe('CreateUserHandler', () => {
   let handler: CreateUserHandler;

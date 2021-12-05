@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { UserFactory, IUserRepository } from 'users/domain';
 import { UpdateUserCommand } from 'users/application/commands/update-user';
-import { USER_REPOSITORY } from 'users/../constants';
+import { USER_REPOSITORY } from '../../../../constants';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, void> {

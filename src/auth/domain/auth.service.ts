@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { GrantTypeEnum, IAuthService, TAuth } from 'auth/domain';
 import { IGrantStrategy, IStrategyRegistry } from 'common';
-import { STRATEGY_REGISTER } from 'auth/../constants';
+import { STRATEGY_REGISTER } from '../../constants';
 
 @Injectable()
 export class AuthService implements IAuthService {

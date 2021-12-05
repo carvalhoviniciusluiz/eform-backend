@@ -50,6 +50,14 @@ export const JWT_SECRET_REFRESHTOKEN =
 // Injection constant
 export const USER_REPOSITORY = 'IUserRepository';
 export const USER_SERVICE = 'IUserService';
+export const FORM_REPOSITORY = 'IFormRepository';
+export const FORM_SERVICE = 'IFormService';
+export const SURVEY_REPOSITORY = 'ISurveyRepository';
+export const SURVEY_SERVICE = 'ISurveyService';
+export const QUESTION_REPOSITORY = 'IQuestionRepository';
+export const QUESTION_SERVICE = 'IQuestionService';
+export const ANSWER_REPOSITORY = 'IAnswerRepository';
+export const ANSWER_SERVICE = 'IAnswerService';
 export const AUTH_SERVICE = 'IAuthService';
 export const STRATEGY_REGISTER = 'IStrategyRegister';
 

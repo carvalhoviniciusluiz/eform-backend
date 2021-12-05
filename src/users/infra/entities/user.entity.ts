@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { BaseEntity } from 'common';
 
-import { TABLE_PREFIX } from 'users/../constants'
+import { TABLE_PREFIX } from 'users/../constants';
 
 @Entity(`${TABLE_PREFIX}users`)
 export class UserEntity extends BaseEntity {

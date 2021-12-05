@@ -98,7 +98,7 @@ export class AuthBodyDto {
   @IsOptional()
   @IsString()
   @Expose({ name: 'document_number' })
-  @Transform(({ value }) => value.replace(/[^0-9]/g, ''))
+  @Transform(({ value }) => value?.replace(/[^0-9]/g, ''))
   documentNumber?: string;
 
   @ApiProperty({

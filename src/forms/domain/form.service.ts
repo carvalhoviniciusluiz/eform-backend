@@ -1,22 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CreateFormCommand, GetAllFormsQuery, UpdateFormCommand } from 'forms/application';
 import { TFormEntity, IForm } from 'forms/domain';
+import { TUser } from 'users/domain';
 
 @Injectable()
 export class FormService {
   constructor(readonly commandBus: CommandBus, readonly queryBus: QueryBus) {}
 
   async find(page: number, pagesize: number): Promise<[IForm[], number]> {
-    console.log({ page, pagesize });
-
-    return [[], 0];
+    const query = new GetAllFormsQuery(page, pagesize);
+    return this.queryBus.execute<GetAllFormsQuery, [IForm[], number]>(query);
   }
 
-  async save(props: TFormEntity): Promise<void> {
-    console.log(props);
+  async save(props: TUser): Promise<void> {
+    const command = new CreateFormCommand(props);
+    return this.commandBus.execute(command);
   }
 
   async update(id: string, props: TFormEntity): Promise<void> {
-    console.log(props);
+    const command = new UpdateFormCommand(id, props);
+    return this.commandBus.execute(command);
   }
 }

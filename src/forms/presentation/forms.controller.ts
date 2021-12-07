@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateFormBodyDTO, UpdateFormBodyDTO } from 'forms/presentation';
+import { CreateFormBodyDTO, FormException, UpdateFormBodyDTO } from 'forms/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedFormResponseDto } from 'forms/presentation/dtos';
 import { IFormService } from 'forms/domain';
@@ -44,6 +44,9 @@ export class FormsController {
     try {
       await this.formService.save(body);
     } catch (error) {
+      if (error.formExists) {
+        throw FormException.unprocessed(error.formName);
+      }
       throw new InternalServerErrorException();
     }
   }
@@ -51,6 +54,13 @@ export class FormsController {
   @ApiResponse({ status: 200, description: 'Success' })
   @Put('/:id')
   async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateFormBodyDTO): Promise<void> {
-    await this.formService.update(id, body);
+    try {
+      await this.formService.update(id, body);
+    } catch (error) {
+      if (error.formExists) {
+        throw FormException.unprocessed(error.formName);
+      }
+      throw new InternalServerErrorException();
+    }
   }
 }

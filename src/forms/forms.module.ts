@@ -4,6 +4,7 @@ import { FormsController } from 'forms/presentation';
 import * as ENV from '../constants';
 import { FormRepository } from 'forms/infra';
 import { FormFactory, FormService } from 'forms/domain';
+import { CreateFormHandler, GetAllFormsHandler, UpdateFormHandler } from 'forms/application';
 
 const infrastructure = [
   {
@@ -11,7 +12,7 @@ const infrastructure = [
     useClass: FormRepository
   }
 ];
-// const application = [];
+const application = [GetAllFormsHandler, CreateFormHandler, UpdateFormHandler];
 const domain = [
   FormFactory,
   {
@@ -23,7 +24,7 @@ const domain = [
 @Module({
   imports: [CqrsModule],
   controllers: [FormsController],
-  providers: [Logger, ...infrastructure, ...domain],
+  providers: [Logger, ...infrastructure, ...application, ...domain],
   exports: []
 })
 export class FormsModule {}

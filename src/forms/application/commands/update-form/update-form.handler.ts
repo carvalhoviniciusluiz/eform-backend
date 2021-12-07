@@ -19,7 +19,7 @@ export class UpdateFormHandler implements ICommandHandler<UpdateFormCommand, voi
     if (found) {
       throw {
         formExists: true,
-        name: props.name
+        formName: props.name
       };
     }
 

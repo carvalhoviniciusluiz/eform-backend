@@ -20,7 +20,7 @@ export class CreateFormHandler implements ICommandHandler<CreateFormCommand, str
     if (found) {
       throw {
         formExists: true,
-        name: props.name
+        formName: props.name
       };
     }
 

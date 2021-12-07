@@ -19,17 +19,27 @@ export class FormRepository implements IFormRepository {
     return [results, count];
   }
 
+  async findById(id: string): Promise<null | IForm> {
+    if (!id) return;
+
+    const query = getConnection().createQueryBuilder().select('form').from(FormEntity, 'form');
+    query.where('form.id = :id', {
+      id
+    });
+
+    const form = await query.getOne();
+    return this.entityToModel(form);
+  }
+
   async findByName(name: string): Promise<null | IForm> {
     if (!name) return;
 
     const query = getConnection().createQueryBuilder().select('form').from(FormEntity, 'form');
-
     query.where('form.name = :name', {
       name
     });
 
     const form = await query.getOne();
-
     return this.entityToModel(form);
   }
 

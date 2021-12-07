@@ -1,8 +1,8 @@
 import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 export class FormException extends NotFoundException {
-  static canNotCreateForm(id: string): InternalServerErrorException {
-    return new InternalServerErrorException(`The Form with id "${id}" can not create Form`);
+  static unprocessed(name: string): InternalServerErrorException {
+    return new InternalServerErrorException(`The Form with name "${name}" unprocessed`);
   }
 
   static notFoundForId(id: string): FormException {

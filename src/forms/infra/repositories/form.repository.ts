@@ -19,6 +19,20 @@ export class FormRepository implements IFormRepository {
     return [results, count];
   }
 
+  async findByName(name: string): Promise<null | IForm> {
+    if (!name) return;
+
+    const query = getConnection().createQueryBuilder().select('form').from(FormEntity, 'form');
+
+    query.where('form.name = :name', {
+      name
+    });
+
+    const form = await query.getOne();
+
+    return this.entityToModel(form);
+  }
+
   async save(data: IForm): Promise<Date | null> {
     const props = this.getFormProps(data);
     const row = await getConnection().createQueryBuilder().insert().into(FormEntity).values([props]).execute();

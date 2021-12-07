@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from 'common';
 import { QuestionEntity } from 'questions/infra';
 
@@ -11,6 +11,7 @@ export class SurveyEntity extends BaseEntity {
   name?: string;
 
   @ManyToOne(() => FormEntity, form => form.surveys)
+  @JoinColumn({ name: 'form_id' })
   form: FormEntity;
 
   @OneToMany(() => QuestionEntity, question => question.survey, {

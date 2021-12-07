@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { BaseEntity } from 'common';
 
 import { TABLE_PREFIX } from '../../../constants';
@@ -11,6 +11,7 @@ export class QuestionEntity extends BaseEntity {
   content?: string;
 
   @ManyToOne(() => SurveyEntity, survey => survey.questions)
+  @JoinColumn({ name: 'survey_id' })
   survey: SurveyEntity;
 
   @OneToMany(() => AnswerEntity, answer => answer.question, {

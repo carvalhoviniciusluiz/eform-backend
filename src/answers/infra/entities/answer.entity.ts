@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from 'common';
 import { QuestionEntity } from 'questions/infra';
 
@@ -10,5 +10,6 @@ export class AnswerEntity extends BaseEntity {
   content?: string;
 
   @ManyToOne(() => QuestionEntity, question => question.answers)
+  @JoinColumn({ name: 'question_id' })
   question: QuestionEntity;
 }

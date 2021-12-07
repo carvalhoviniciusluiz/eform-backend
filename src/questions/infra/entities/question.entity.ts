@@ -10,6 +10,9 @@ export class QuestionEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   content?: string;
 
+  @Column('uuid', { name: 'survey_id' })
+  surveyId: string;
+
   @ManyToOne(() => SurveyEntity, survey => survey.questions)
   @JoinColumn({ name: 'survey_id' })
   survey: SurveyEntity;

@@ -27,6 +27,7 @@ describe('SurveysController', () => {
   describe('save', () => {
     it('should return undefined', async () => {
       const body = {
+        formId: 'formId',
         name: 'name'
       };
 
@@ -41,6 +42,7 @@ describe('SurveysController', () => {
   describe('update', () => {
     it('should return undefined', async () => {
       const body = {
+        formId: 'formId',
         name: 'name'
       };
 

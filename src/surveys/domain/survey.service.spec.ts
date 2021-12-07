@@ -30,7 +30,7 @@ describe('SurveyService', () => {
 
   describe('save', () => {
     it('should return void', async () => {
-      const props = { id: uuid() };
+      const props = { formId: 'formId', name: 'name' };
 
       service.save = jest.fn().mockReturnValue(null);
 
@@ -43,7 +43,7 @@ describe('SurveyService', () => {
   describe('update', () => {
     it('should return void', async () => {
       const id = uuid();
-      const props = {};
+      const props = { formId: 'formId', name: 'name' };
 
       service.update = jest.fn().mockReturnValue(null);
 

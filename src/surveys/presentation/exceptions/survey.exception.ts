@@ -1,8 +1,8 @@
 import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 export class SurveyException extends NotFoundException {
-  static canNotCreateSurvey(id: string): InternalServerErrorException {
-    return new InternalServerErrorException(`The Survey with id "${id}" can not create Survey`);
+  static unprocessed(name: string): InternalServerErrorException {
+    return new InternalServerErrorException(`The Survey with name "${name}" unprocessed`);
   }
 
   static notFoundForId(id: string): SurveyException {

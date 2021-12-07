@@ -14,10 +14,11 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateSurveyBodyDTO, UpdateSurveyBodyDTO } from 'surveys/presentation';
+import { CreateSurveyBodyDTO, SurveyException, UpdateSurveyBodyDTO } from 'surveys/presentation';
 import { RequestPaginateDto } from 'common/dtos';
 import { PaginatedSurveyResponseDto } from 'surveys/presentation/dtos';
 import { ISurveyService } from 'surveys/domain';
+import { FormException } from 'forms/presentation';
 import { SURVEY_SERVICE } from '../../constants';
 
 @ApiTags('SURVEY')
@@ -44,6 +45,12 @@ export class SurveysController {
     try {
       await this.surveyService.save(body);
     } catch (error) {
+      if (error.code === '22P02' || error.formNotFound) {
+        throw FormException.notFoundForId(body.formId);
+      }
+      if (error.surveyExists) {
+        throw SurveyException.unprocessed(error.surveyName);
+      }
       throw new InternalServerErrorException();
     }
   }
@@ -51,6 +58,16 @@ export class SurveysController {
   @ApiResponse({ status: 200, description: 'Success' })
   @Put('/:id')
   async update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: UpdateSurveyBodyDTO): Promise<void> {
-    await this.surveyService.update(id, body);
+    try {
+      await this.surveyService.update(id, body);
+    } catch (error) {
+      if (error.code === '22P02' || error.formNotFound) {
+        throw FormException.notFoundForId(body.formId);
+      }
+      if (error.surveyExists) {
+        throw SurveyException.unprocessed(error.surveyName);
+      }
+      throw new InternalServerErrorException();
+    }
   }
 }

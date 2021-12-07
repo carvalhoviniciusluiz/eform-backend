@@ -1,14 +1,16 @@
 import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from 'common';
 import { QuestionEntity } from 'questions/infra';
-
-import { TABLE_PREFIX } from '../../../constants';
 import { FormEntity } from 'forms/infra';
+import { TABLE_PREFIX } from '../../../constants';
 
 @Entity(`${TABLE_PREFIX}surveys`)
 export class SurveyEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   name?: string;
+
+  @Column('uuid', { name: 'form_id' })
+  formId: string;
 
   @ManyToOne(() => FormEntity, form => form.surveys)
   @JoinColumn({ name: 'form_id' })

@@ -19,17 +19,27 @@ export class SurveyRepository implements ISurveyRepository {
     return [results, count];
   }
 
+  async findById(id: string): Promise<null | ISurvey> {
+    if (!id) return;
+
+    const query = getConnection().createQueryBuilder().select('survey').from(SurveyEntity, 'survey');
+    query.where('survey.id = :id', {
+      id
+    });
+
+    const survey = await query.getOne();
+    return this.entityToModel(survey);
+  }
+
   async findByName(name: string): Promise<null | ISurvey> {
     if (!name) return;
 
     const query = getConnection().createQueryBuilder().select('survey').from(SurveyEntity, 'survey');
-
     query.where('survey.name = :name', {
       name
     });
 
     const survey = await query.getOne();
-
     return this.entityToModel(survey);
   }
 

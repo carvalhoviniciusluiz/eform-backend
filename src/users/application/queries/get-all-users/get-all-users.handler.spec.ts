@@ -1,15 +1,14 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-
-import { FindUsersQuery } from 'users/application/queries/find-users/find-users.query';
-import { FindUsersHandler } from 'users/application/queries/find-users/find-users.handler';
+import { v4 as uuid } from 'uuid';
+import { GetAllUsersQuery } from 'users/application/queries/get-all-users/get-all-users.query';
+import { GetAllUsersHandler } from 'users/application/queries/get-all-users/get-all-users.handler';
 import { IUserRepository } from 'users/domain/user.repository';
 import { IUser } from 'users/domain';
 import { USER_REPOSITORY } from 'users/../constants';
-import { v4 as uuid } from 'uuid';
 
-describe('FindUsersHandler', () => {
-  let handler: FindUsersHandler;
+describe('GetAllUsersHandler', () => {
+  let handler: GetAllUsersHandler;
   let repository: IUserRepository;
 
   beforeEach(async () => {
@@ -17,11 +16,11 @@ describe('FindUsersHandler', () => {
       provide: USER_REPOSITORY,
       useValue: {}
     };
-    const providers: Provider[] = [FindUsersHandler, repoProvider];
+    const providers: Provider[] = [GetAllUsersHandler, repoProvider];
     const moduleMetadata: ModuleMetadata = { providers };
     const testModule = await Test.createTestingModule(moduleMetadata).compile();
 
-    handler = testModule.get(FindUsersHandler);
+    handler = testModule.get(GetAllUsersHandler);
     repository = testModule.get(USER_REPOSITORY);
   });
 
@@ -29,11 +28,11 @@ describe('FindUsersHandler', () => {
     const page = 0;
     const pagesize = 10;
 
-    it('should execute FindUsersQuery', async () => {
+    it('should execute GetAllUsersQuery', async () => {
       const resolvedValue: [[], number] = [[], 0];
       repository.find = jest.fn().mockResolvedValue(resolvedValue);
 
-      const command = new FindUsersQuery(page, pagesize);
+      const command = new GetAllUsersQuery(page, pagesize);
 
       await expect(handler.execute(command)).resolves.toEqual(resolvedValue);
       expect(repository.find).toBeCalledTimes(1);
@@ -76,7 +75,7 @@ describe('FindUsersHandler', () => {
       const resolvedValue: [IUser[], number] = [[user], 1];
       repository.find = jest.fn().mockResolvedValue(resolvedValue);
 
-      const command = new FindUsersQuery(page, pagesize);
+      const command = new GetAllUsersQuery(page, pagesize);
 
       await expect(handler.execute(command)).resolves.toEqual(resultValue);
       expect(repository.find).toBeCalledTimes(1);

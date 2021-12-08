@@ -1,1 +1,1 @@
-export * from './find-users';
+export * from './get-all-users';

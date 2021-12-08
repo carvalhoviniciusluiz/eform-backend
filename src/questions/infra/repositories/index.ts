@@ -1,1 +1,1 @@
-export * from './survey.repository';
+export * from './question.repository';

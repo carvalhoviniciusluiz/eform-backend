@@ -1,8 +1,8 @@
 import { InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 export class QuestionException extends NotFoundException {
-  static canNotCreateQuestion(id: string): InternalServerErrorException {
-    return new InternalServerErrorException(`The Question with id "${id}" can not create Question`);
+  static unprocessed(): InternalServerErrorException {
+    return new InternalServerErrorException(`Question unprocessed`);
   }
 
   static notFoundForId(id: string): QuestionException {

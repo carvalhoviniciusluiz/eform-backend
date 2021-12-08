@@ -3,6 +3,7 @@ import { IQuestion, TQuestionEntity } from 'questions/domain';
 
 export class QuestionModel extends AggregateRoot implements IQuestion {
   private id?: string;
+  private surveyId?: string;
   private content?: string;
   private createdAt?: Date | null = null;
   private version = 0;
@@ -16,6 +17,7 @@ export class QuestionModel extends AggregateRoot implements IQuestion {
   props(): TQuestionEntity {
     return {
       id: this.id,
+      surveyId: this.surveyId,
       content: this.content,
       createdAt: this.createdAt,
       updatedAt: new Date(),

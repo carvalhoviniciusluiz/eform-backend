@@ -20,6 +20,8 @@ export class CreateSurveyHandler implements ICommandHandler<CreateSurveyCommand,
   async execute(command: CreateSurveyCommand): Promise<string> {
     const { props } = command;
 
+    const { uppercase } = props;
+
     await this.formRepository.findById(props.formId);
 
     const surveyFound = await this.surveyRepository.findByName(props.name);
@@ -35,7 +37,7 @@ export class CreateSurveyHandler implements ICommandHandler<CreateSurveyCommand,
     const survey = this.surveyFactory.create({
       id,
       formId: props.formId,
-      name: props.name
+      name: uppercase ? props?.name?.toUpperCase() : props.name
     });
 
     // survey.createSurvey();

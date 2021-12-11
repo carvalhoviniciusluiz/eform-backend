@@ -19,6 +19,8 @@ export class UpdateSurveyHandler implements ICommandHandler<UpdateSurveyCommand,
   async execute(command: UpdateSurveyCommand): Promise<void> {
     const { id, props } = command;
 
+    const { uppercase } = props;
+
     if (props.formId) {
       await this.formRepository.findById(props.formId);
     }
@@ -35,7 +37,7 @@ export class UpdateSurveyHandler implements ICommandHandler<UpdateSurveyCommand,
 
     const data = this.surveyFactory.reconstitute({
       formId: props.formId,
-      name: props.name
+      name: uppercase ? props?.name?.toUpperCase() : props.name
     });
 
     await this.surveyRepository.update(id, data);

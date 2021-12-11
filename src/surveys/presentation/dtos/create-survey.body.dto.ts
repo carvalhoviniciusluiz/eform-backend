@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength, MinLength } from 'class-validator';
 
 export class CreateSurveyBodyDTO {
   @ApiProperty({
@@ -25,4 +25,13 @@ export class CreateSurveyBodyDTO {
   @MinLength(2)
   @MaxLength(200)
   readonly name: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'The text will be uppercase',
+    example: true
+  })
+  @IsOptional()
+  @IsBoolean()
+  uppercase?: boolean;
 }

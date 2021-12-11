@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateQuestionCommand, GetAllQuestionsQuery, UpdateQuestionCommand } from 'questions/application';
 import { IQuestionBody, IQuestion } from 'questions/domain';
+import { IQuestionService } from './interfaces';
 
 @Injectable()
-export class QuestionService {
+export class QuestionService implements IQuestionService {
   constructor(readonly commandBus: CommandBus, readonly queryBus: QueryBus) {}
 
   async find(page: number, pagesize: number): Promise<[IQuestion[], number]> {

@@ -19,6 +19,19 @@ export class AnswerRepository implements IAnswerRepository {
     return [results, count];
   }
 
+  async findByContent(questionId: string, content: string): Promise<null | IAnswer> {
+    if (!questionId || !content) return;
+
+    const query = getConnection().createQueryBuilder().select('answer').from(AnswerEntity, 'answer');
+    query.where('answer.question_id = :questionId AND answer.content = :content', {
+      questionId,
+      content
+    });
+
+    const answer = await query.getOne();
+    return this.entityToModel(answer);
+  }
+
   async save(data: IAnswer): Promise<Date | null> {
     const props = this.getAnswerProps(data);
     const row = await getConnection().createQueryBuilder().insert().into(AnswerEntity).values([props]).execute();

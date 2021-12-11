@@ -2,8 +2,6 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { AnswerService } from 'answers/domain';
 
-import { v4 as uuid } from 'uuid';
-
 describe('AnswerService', () => {
   let service: AnswerService;
 
@@ -30,7 +28,7 @@ describe('AnswerService', () => {
 
   describe('save', () => {
     it('should return void', async () => {
-      const props = { id: uuid() };
+      const props = { questionId: 'questionId', content: 'content' };
 
       service.save = jest.fn().mockReturnValue(null);
 
@@ -42,8 +40,8 @@ describe('AnswerService', () => {
 
   describe('update', () => {
     it('should return void', async () => {
-      const id = uuid();
-      const props = {};
+      const id = 'id';
+      const props = { questionId: 'questionId', content: 'content' };
 
       service.update = jest.fn().mockReturnValue(null);
 

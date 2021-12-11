@@ -5,4 +5,5 @@ export interface IQuestionRepository {
   update: (id: string, data: IQuestion) => Promise<null | Date>;
   find: (page: number, pagesize: number) => Promise<[(null | IQuestion)[], number]>;
   findByContent: (surveyId: string, content: string) => Promise<null | IQuestion>;
+  findById: (id: string) => Promise<null | IQuestion>;
 }

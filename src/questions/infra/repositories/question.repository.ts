@@ -26,6 +26,18 @@ export class QuestionRepository implements IQuestionRepository {
     return question?.created_at;
   }
 
+  async findById(id: string): Promise<null | IQuestion> {
+    if (!id) return;
+
+    const query = getConnection().createQueryBuilder().select('question').from(QuestionEntity, 'question');
+    query.where('question.id = :id', {
+      id
+    });
+
+    const question = await query.getOne();
+    return this.entityToModel(question);
+  }
+
   async findByContent(surveyId: string, content: string): Promise<null | IQuestion> {
     if (!surveyId || !content) return;
 

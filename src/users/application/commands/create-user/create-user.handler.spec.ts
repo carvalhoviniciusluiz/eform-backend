@@ -1,11 +1,10 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-
+import { EventBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from 'users/application/commands/create-user/create-user.command';
 import { CreateUserHandler } from 'users/application/commands/create-user/create-user.handler';
 import { UserFactory } from 'users/domain/user.factory';
-import { IUserRepository } from 'users/domain/user.repository';
-import { EventBus } from '@nestjs/cqrs';
+import { IUserRepository } from 'users/domain';
 import { USER_REPOSITORY } from '../../../../constants';
 
 describe('CreateUserHandler', () => {

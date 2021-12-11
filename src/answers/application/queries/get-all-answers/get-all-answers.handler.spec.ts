@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { v4 as uuid } from 'uuid';
 import { GetAllAnswersQuery } from 'answers/application/queries/get-all-answers/get-all-answers.query';
 import { GetAllAnswersHandler } from 'answers/application/queries/get-all-answers/get-all-answers.handler';
-import { IAnswerRepository } from 'answers/domain/answer.repository';
+import { IAnswerRepository } from 'answers/domain';
 import { ANSWER_REPOSITORY } from '../../../../constants';
 
 describe('GetAllAnswersHandler', () => {

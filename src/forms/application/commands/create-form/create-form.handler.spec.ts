@@ -1,10 +1,9 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-
 import { CreateFormCommand } from 'forms/application/commands/create-form/create-form.command';
 import { CreateFormHandler } from 'forms/application/commands/create-form/create-form.handler';
+import { IFormRepository } from 'forms/domain';
 import { FormFactory } from 'forms/domain/form.factory';
-import { IFormRepository } from 'forms/domain/form.repository';
 import { FORM_REPOSITORY } from '../../../../constants';
 
 describe('CreateFormHandler', () => {

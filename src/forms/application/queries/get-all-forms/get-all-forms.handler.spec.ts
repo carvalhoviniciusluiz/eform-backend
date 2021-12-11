@@ -3,8 +3,7 @@ import { Test } from '@nestjs/testing';
 import { v4 as uuid } from 'uuid';
 import { GetAllFormsQuery } from 'forms/application/queries/get-all-forms/get-all-forms.query';
 import { GetAllFormsHandler } from 'forms/application/queries/get-all-forms/get-all-forms.handler';
-import { IFormRepository } from 'forms/domain/form.repository';
-import { IForm } from 'forms/domain';
+import { IForm, IFormRepository } from 'forms/domain';
 import { FORM_REPOSITORY } from '../../../../constants';
 
 describe('GetAllFormsHandler', () => {

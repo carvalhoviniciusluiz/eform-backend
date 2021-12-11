@@ -1,13 +1,10 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-
 import { UpdateFormCommand } from 'forms/application/commands/update-form/update-form.command';
 import { UpdateFormHandler } from 'forms/application/commands/update-form/update-form.handler';
 import { FormFactory } from 'forms/domain/form.factory';
-import { IFormRepository } from 'forms/domain/form.repository';
+import { IFormRepository } from 'forms/domain';
 import { FORM_REPOSITORY } from '../../../../constants';
-
-import { v4 as uuid } from 'uuid';
 
 describe('UpdateFormHandler', () => {
   let handler: UpdateFormHandler;
@@ -35,7 +32,7 @@ describe('UpdateFormHandler', () => {
   describe('execute', () => {
     it('should execute UpdateFormCommand', async () => {
       const account = {};
-      const id = uuid();
+      const id = 'id';
       const props = {};
 
       factory.reconstitute = jest.fn().mockReturnValue(account);

@@ -4,8 +4,8 @@ import { IFormRepository } from 'forms/domain';
 
 import { CreateSurveyCommand } from 'surveys/application/commands/create-survey/create-survey.command';
 import { CreateSurveyHandler } from 'surveys/application/commands/create-survey/create-survey.handler';
+import { ISurveyRepository } from 'surveys/domain';
 import { SurveyFactory } from 'surveys/domain/survey.factory';
-import { ISurveyRepository } from 'surveys/domain/survey.repository';
 import { FORM_REPOSITORY, SURVEY_REPOSITORY } from '../../../../constants';
 
 describe('CreateSurveyHandler', () => {

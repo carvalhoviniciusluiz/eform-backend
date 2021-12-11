@@ -2,7 +2,7 @@ import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { FindByIdQuery } from 'forms/application/queries/find-by-id/find-by-id.query';
 import { FindByIdHandler } from 'forms/application/queries/find-by-id/find-by-id.handler';
-import { IFormRepository } from 'forms/domain/form.repository';
+import { IFormRepository } from 'forms/domain';
 import { FORM_REPOSITORY } from '../../../../constants';
 
 describe('FindByIdHandler', () => {

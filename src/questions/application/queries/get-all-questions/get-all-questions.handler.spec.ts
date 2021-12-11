@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { v4 as uuid } from 'uuid';
 import { GetAllSurveysQuery } from 'surveys/application/queries/get-all-surveys/get-all-surveys.query';
 import { GetAllSurveysHandler } from 'surveys/application/queries/get-all-surveys/get-all-surveys.handler';
-import { ISurveyRepository } from 'surveys/domain/survey.repository';
+import { ISurveyRepository } from 'surveys/domain';
 import { SURVEY_REPOSITORY } from '../../../../constants';
 
 describe('GetAllSurveysHandler', () => {

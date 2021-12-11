@@ -4,9 +4,9 @@ import { v4 as uuid } from 'uuid';
 import { UpdateSurveyCommand } from 'surveys/application/commands/update-survey/update-survey.command';
 import { UpdateSurveyHandler } from 'surveys/application/commands/update-survey/update-survey.handler';
 import { SurveyFactory } from 'surveys/domain/survey.factory';
-import { ISurveyRepository } from 'surveys/domain/survey.repository';
-import { FORM_REPOSITORY, SURVEY_REPOSITORY } from '../../../../constants';
 import { IFormRepository } from 'forms/domain';
+import { ISurveyRepository } from 'surveys/domain';
+import { FORM_REPOSITORY, SURVEY_REPOSITORY } from '../../../../constants';
 
 describe('UpdateSurveyHandler', () => {
   let formRepository: IFormRepository;

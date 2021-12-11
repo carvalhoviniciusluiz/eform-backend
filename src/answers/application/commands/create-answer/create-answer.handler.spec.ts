@@ -4,7 +4,7 @@ import { IQuestionRepository } from 'questions/domain';
 import { CreateAnswerCommand } from 'answers/application/commands/create-answer/create-answer.command';
 import { CreateAnswerHandler } from 'answers/application/commands/create-answer/create-answer.handler';
 import { AnswerFactory } from 'answers/domain/answer.factory';
-import { IAnswerRepository } from 'answers/domain/answer.repository';
+import { IAnswerRepository } from 'answers/domain';
 import { QUESTION_REPOSITORY, ANSWER_REPOSITORY } from '../../../../constants';
 
 describe('CreateAnswerHandler', () => {

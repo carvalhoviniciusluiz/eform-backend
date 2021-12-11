@@ -2,8 +2,8 @@ import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { UpdateAnswerCommand } from 'answers/application/commands/update-answer/update-answer.command';
 import { UpdateAnswerHandler } from 'answers/application/commands/update-answer/update-answer.handler';
+import { IAnswerRepository } from 'answers/domain';
 import { AnswerFactory } from 'answers/domain/answer.factory';
-import { IAnswerRepository } from 'answers/domain/answer.repository';
 import { IQuestionRepository } from 'questions/domain';
 import { QUESTION_REPOSITORY, ANSWER_REPOSITORY } from '../../../../constants';
 

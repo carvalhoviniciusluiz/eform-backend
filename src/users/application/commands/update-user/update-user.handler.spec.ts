@@ -1,13 +1,10 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-
 import { UpdateUserCommand } from 'users/application/commands/update-user/update-user.command';
 import { UpdateUserHandler } from 'users/application/commands/update-user/update-user.handler';
 import { UserFactory } from 'users/domain/user.factory';
-import { IUserRepository } from 'users/domain/user.repository';
+import { IUserRepository } from 'users/domain';
 import { USER_REPOSITORY } from '../../../../constants';
-
-import { v4 as uuid } from 'uuid';
 
 describe('UpdateUserHandler', () => {
   let handler: UpdateUserHandler;
@@ -35,7 +32,7 @@ describe('UpdateUserHandler', () => {
   describe('execute', () => {
     it('should execute UpdateUserCommand', async () => {
       const account = {};
-      const id = uuid();
+      const id = 'id';
       const props = {};
 
       factory.reconstitute = jest.fn().mockReturnValue(account);

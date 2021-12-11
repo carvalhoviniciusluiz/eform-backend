@@ -3,9 +3,8 @@ import { Test } from '@nestjs/testing';
 import { v4 as uuid } from 'uuid';
 import { GetAllUsersQuery } from 'users/application/queries/get-all-users/get-all-users.query';
 import { GetAllUsersHandler } from 'users/application/queries/get-all-users/get-all-users.handler';
-import { IUserRepository } from 'users/domain/user.repository';
-import { IUser } from 'users/domain';
-import { USER_REPOSITORY } from 'users/../constants';
+import { IUser, IUserRepository } from 'users/domain';
+import { USER_REPOSITORY } from '../../../../constants';
 
 describe('GetAllUsersHandler', () => {
   let handler: GetAllUsersHandler;

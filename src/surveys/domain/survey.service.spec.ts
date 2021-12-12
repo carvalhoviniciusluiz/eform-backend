@@ -2,8 +2,6 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 import { SurveyService } from 'surveys/domain';
 
-import { v4 as uuid } from 'uuid';
-
 describe('SurveyService', () => {
   let service: SurveyService;
 
@@ -30,7 +28,11 @@ describe('SurveyService', () => {
 
   describe('save', () => {
     it('should return void', async () => {
-      const props = { formId: 'formId', name: 'name' };
+      const props = {
+        formId: 'formId',
+        parentId: 'parentId',
+        name: 'name'
+      };
 
       service.save = jest.fn().mockReturnValue(null);
 
@@ -42,8 +44,12 @@ describe('SurveyService', () => {
 
   describe('update', () => {
     it('should return void', async () => {
-      const id = uuid();
-      const props = { formId: 'formId', name: 'name' };
+      const id = 'id';
+      const props = {
+        formId: 'formId',
+        parentId: 'parentId',
+        name: 'name'
+      };
 
       service.update = jest.fn().mockReturnValue(null);
 

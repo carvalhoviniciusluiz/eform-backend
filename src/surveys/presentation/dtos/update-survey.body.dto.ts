@@ -9,7 +9,17 @@ export class UpdateSurveyBodyDTO {
   })
   @IsOptional()
   @IsUUID()
-  readonly formId: string;
+  readonly formId?: string;
+
+  @ApiProperty({
+    type: String,
+    description: 'The parent id of the survey',
+    example: '0315ded9-a16a-4930-a25a-231fe963bf57',
+    required: true
+  })
+  @IsOptional()
+  @IsUUID()
+  readonly parentId?: string;
 
   @ApiProperty({
     type: String,
@@ -22,7 +32,7 @@ export class UpdateSurveyBodyDTO {
   @IsString()
   @MinLength(2)
   @MaxLength(200)
-  readonly name: string;
+  readonly name?: string;
 
   @ApiProperty({
     type: String,

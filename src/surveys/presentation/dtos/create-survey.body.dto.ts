@@ -14,6 +14,16 @@ export class CreateSurveyBodyDTO {
 
   @ApiProperty({
     type: String,
+    description: 'The parent id of the survey',
+    example: '0315ded9-a16a-4930-a25a-231fe963bf57',
+    required: true
+  })
+  @IsOptional()
+  @IsUUID()
+  readonly parentId?: string;
+
+  @ApiProperty({
+    type: String,
     description: 'The name of the form',
     example: 'Survey test',
     minLength: 2,

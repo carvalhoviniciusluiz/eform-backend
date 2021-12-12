@@ -26,16 +26,17 @@ describe('GetAllSurveysHandler', () => {
   describe('execute', () => {
     const page = 0;
     const pagesize = 10;
+    const formid = 'formid';
 
     it('should execute GetAllSurveysQuery', async () => {
       const resolvedValue: [[], number] = [[], 0];
       repository.find = jest.fn().mockResolvedValue(resolvedValue);
 
-      const command = new GetAllSurveysQuery(page, pagesize);
+      const command = new GetAllSurveysQuery(formid, page, pagesize);
 
       await expect(handler.execute(command)).resolves.toEqual(resolvedValue);
       expect(repository.find).toBeCalledTimes(1);
-      expect(repository.find).toBeCalledWith(command.page, command.pagesize);
+      expect(repository.find).toBeCalledWith(command.formId, command.page, command.pagesize);
     });
 
     it('should return a collection', async () => {
@@ -53,11 +54,11 @@ describe('GetAllSurveysHandler', () => {
 
       repository.find = jest.fn().mockResolvedValue(resolvedValue);
 
-      const command = new GetAllSurveysQuery(page, pagesize);
+      const command = new GetAllSurveysQuery(formid, page, pagesize);
 
       await expect(handler.execute(command)).resolves.toEqual(resultValue);
       expect(repository.find).toBeCalledTimes(1);
-      expect(repository.find).toBeCalledWith(command.page, command.pagesize);
+      expect(repository.find).toBeCalledWith(command.formId, command.page, command.pagesize);
     });
   });
 });

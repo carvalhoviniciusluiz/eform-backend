@@ -86,12 +86,13 @@ describe('SurveysController', () => {
 
       const page = 1;
       const pagesize = 10;
+      const formid = 'formid';
 
       service.find = jest.fn().mockReturnValue(returnValue);
 
-      await expect(controller.find({ page, pagesize })).resolves.toEqual(resultValue);
+      await expect(controller.find({ formid, page, pagesize })).resolves.toEqual(resultValue);
       expect(service.find).toBeCalledTimes(1);
-      expect(service.find).toBeCalledWith(page, pagesize);
+      expect(service.find).toBeCalledWith(formid, page, pagesize);
     });
   });
 });

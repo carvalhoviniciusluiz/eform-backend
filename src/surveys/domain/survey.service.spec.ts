@@ -63,12 +63,13 @@ describe('SurveyService', () => {
     it('should return undefined', async () => {
       const page = 0;
       const pagesize = 20;
+      const formid = 'formid';
 
       service.find = jest.fn().mockReturnValue(null);
 
-      expect(await service.find(page, pagesize)).toBeNull();
+      expect(await service.find(formid, page, pagesize)).toBeNull();
       expect(service.find).toBeCalledTimes(1);
-      expect(service.find).toBeCalledWith(page, pagesize);
+      expect(service.find).toBeCalledWith(formid, page, pagesize);
     });
   });
 });

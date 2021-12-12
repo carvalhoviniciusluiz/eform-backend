@@ -15,8 +15,7 @@ import {
 import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateSurveyBodyDTO, SurveyException, UpdateSurveyBodyDTO } from 'surveys/presentation';
-import { RequestPaginateDto } from 'common/dtos';
-import { PaginatedSurveyResponseDto } from 'surveys/presentation/dtos';
+import { SurveyRequestPaginateDto, PaginatedSurveyResponseDto } from 'surveys/presentation/dtos';
 import { ISurveyService } from 'surveys/domain';
 import { FormException } from 'forms/presentation';
 import { SURVEY_SERVICE } from '../../constants';
@@ -33,9 +32,10 @@ export class SurveysController {
 
   @ApiOkResponse({ type: PaginatedSurveyResponseDto })
   @Get()
-  async find(@Query(ValidationPipe) paginateDto: RequestPaginateDto): Promise<PaginatedSurveyResponseDto> {
-    const { page, pagesize } = paginateDto;
-    const [rows, count] = await this.surveyService.find(page, pagesize);
+  async find(@Query(ValidationPipe) paginateDto: SurveyRequestPaginateDto): Promise<PaginatedSurveyResponseDto> {
+    const { page, pagesize, formid: formId } = paginateDto;
+
+    const [rows, count] = await this.surveyService.find(formId, page, pagesize);
     return new PaginatedSurveyResponseDto(rows, count, page, pagesize);
   }
 

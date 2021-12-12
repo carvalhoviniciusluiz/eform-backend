@@ -6,14 +6,25 @@ import { Inject } from '@nestjs/common';
 export class SurveyRepository implements ISurveyRepository {
   constructor(@Inject(SurveyFactory) private readonly surveyFactory: SurveyFactory) {}
 
-  async find(page = 0, pagesize = 20): Promise<[(null | ISurvey)[], number]> {
-    const query = getConnection().createQueryBuilder().select('survey').from(SurveyEntity, 'survey');
+  async find(formId: string, page = 0, pagesize = 20): Promise<[(null | ISurvey)[], number]> {
+    const query = getConnection()
+      .createQueryBuilder()
+      .select('survey')
+      .from(SurveyEntity, 'survey')
+      .innerJoinAndSelect('survey.form', 'form')
+      .leftJoinAndSelect('survey.children', 'children')
+      .where('survey.parent_id IS NULL');
+
+    query.andWhere('survey.form_id = :formId', {
+      formId
+    });
 
     if (pagesize) {
       query.take(pagesize).skip(page * pagesize);
     }
 
     const [surveys, count] = await query.getManyAndCount();
+
     const results = surveys.map(survey => this.entityToModel(survey));
 
     return [results, count];

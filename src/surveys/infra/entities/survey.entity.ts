@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn, JoinTable } from 'typeorm';
 import { BaseEntity } from 'common';
 import { QuestionEntity } from 'questions/infra';
 import { FormEntity } from 'forms/infra';
@@ -31,5 +31,6 @@ export class SurveyEntity extends BaseEntity {
   @OneToMany(() => SurveyEntity, child => child.parent, {
     cascade: ['insert', 'update']
   })
+  @JoinTable()
   children: SurveyEntity[];
 }

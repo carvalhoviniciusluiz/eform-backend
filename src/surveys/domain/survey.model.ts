@@ -5,6 +5,7 @@ export class SurveyModel extends AggregateRoot implements ISurvey {
   private id?: string;
   private formId?: string;
   private parentId?: string;
+  private children?: TSurveyEntity[];
   private name?: string;
   private createdAt?: Date | null = null;
   private version = 0;
@@ -19,6 +20,7 @@ export class SurveyModel extends AggregateRoot implements ISurvey {
       id: this.id,
       formId: this.formId,
       parentId: this.parentId,
+      children: this.children,
       name: this.name,
       createdAt: this.createdAt,
       updatedAt: new Date(),

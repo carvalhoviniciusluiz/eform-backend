@@ -2,15 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateSurveyCommand, GetAllSurveysQuery, UpdateSurveyCommand } from 'surveys/application';
 import { AddSurveyChildCommand } from 'surveys/application/commands/add-survey-child';
-import { ISurvey, ISurveyBody } from 'surveys/domain';
-import { ISurveyChildBody } from './interfaces';
+import { ISurvey, ISurveyBody, ISurveyChildBody, ISurveyService } from 'surveys/domain';
 
 @Injectable()
-export class SurveyService {
+export class SurveyService implements ISurveyService {
   constructor(readonly commandBus: CommandBus, readonly queryBus: QueryBus) {}
 
-  async find(page: number, pagesize: number): Promise<[ISurvey[], number]> {
-    const query = new GetAllSurveysQuery(page, pagesize);
+  async find(formId: string, page: number, pagesize: number): Promise<[ISurvey[], number]> {
+    const query = new GetAllSurveysQuery(formId, page, pagesize);
     return this.queryBus.execute<GetAllSurveysQuery, [ISurvey[], number]>(query);
   }
 

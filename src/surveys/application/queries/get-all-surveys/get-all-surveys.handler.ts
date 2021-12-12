@@ -12,7 +12,7 @@ export class GetAllSurveysHandler implements IQueryHandler<GetAllSurveysQuery, [
   ) {}
 
   async execute(command: GetAllSurveysQuery): Promise<[TSurveyEntity[], number]> {
-    const [rows, count] = await this.surveyRepository.find(command.page, command.pagesize);
+    const [rows, count] = await this.surveyRepository.find(command.formId, command.page, command.pagesize);
 
     const parsedRows = rows.map(this.filterResultProps);
 
@@ -20,11 +20,16 @@ export class GetAllSurveysHandler implements IQueryHandler<GetAllSurveysQuery, [
   }
 
   private filterResultProps(row: ISurvey) {
-    const { id, name, updatedAt } = row.props();
+    const { id, name, children, updatedAt } = row.props();
 
     return {
       id,
       name,
+      children: children?.map(child => ({
+        id: child.id,
+        name: child.name,
+        updatedAt: child.updatedAt
+      })),
       updatedAt
     };
   }

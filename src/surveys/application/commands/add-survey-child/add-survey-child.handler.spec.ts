@@ -39,13 +39,13 @@ describe('AddSurveyChildHandler', () => {
 
   describe('execute', () => {
     it('should execute AddSurveyChildCommand', async () => {
-      const user = { createAccount: jest.fn(), props: () => jest.fn() };
+      const surveyChild = { createAccount: jest.fn(), props: () => jest.fn() };
 
       formRepository.findById = jest.fn().mockResolvedValue(undefined);
       surveyRepository.save = jest.fn().mockResolvedValue(undefined);
-      surveyRepository.findById = jest.fn().mockResolvedValue(undefined);
+      surveyRepository.findById = jest.fn().mockResolvedValue({});
       surveyRepository.findByName = jest.fn().mockResolvedValue(undefined);
-      factory.create = jest.fn().mockReturnValue(user);
+      factory.create = jest.fn().mockReturnValue(surveyChild);
 
       const command = new AddSurveyChildCommand({
         formId: 'formId',
@@ -55,7 +55,7 @@ describe('AddSurveyChildHandler', () => {
 
       await expect(handler.execute(command)).resolves.not.toBeNull();
       expect(surveyRepository.save).toBeCalledTimes(1);
-      expect(surveyRepository.save).toBeCalledWith(user);
+      expect(surveyRepository.save).toBeCalledWith(surveyChild);
     });
   });
 });

@@ -7,6 +7,7 @@ import { SurveyFactory, SurveyService } from 'surveys/domain';
 import { CreateSurveyHandler, GetAllSurveysHandler, UpdateSurveyHandler } from 'surveys/application';
 import { FormRepository } from 'forms/infra';
 import { FormFactory } from 'forms/domain';
+import { AddSurveyChildHandler } from './application/commands/add-survey-child';
 
 const infrastructure = [
   {
@@ -18,7 +19,7 @@ const infrastructure = [
     useClass: SurveyRepository
   }
 ];
-const application = [GetAllSurveysHandler, CreateSurveyHandler, UpdateSurveyHandler];
+const application = [GetAllSurveysHandler, CreateSurveyHandler, UpdateSurveyHandler, AddSurveyChildHandler];
 const domain = [
   FormFactory,
   SurveyFactory,

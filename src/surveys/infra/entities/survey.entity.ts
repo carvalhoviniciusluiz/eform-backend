@@ -20,4 +20,16 @@ export class SurveyEntity extends BaseEntity {
     cascade: ['insert', 'update']
   })
   questions: QuestionEntity[];
+
+  @Column('uuid', { name: 'parent_id', nullable: true })
+  parentId: string;
+
+  @ManyToOne(() => SurveyEntity, parent => parent.children)
+  @JoinColumn({ name: 'parent_id' })
+  parent: SurveyEntity;
+
+  @OneToMany(() => SurveyEntity, child => child.parent, {
+    cascade: ['insert', 'update']
+  })
+  children: SurveyEntity[];
 }

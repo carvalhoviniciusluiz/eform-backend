@@ -51,6 +51,9 @@ export class SurveysController {
       if (error.surveyExists) {
         throw SurveyException.unprocessed(error.surveyName);
       }
+      if (error.parentNotFound) {
+        throw SurveyException.notFoundForId(error.parentId);
+      }
       throw new InternalServerErrorException();
     }
   }
@@ -66,6 +69,9 @@ export class SurveysController {
       }
       if (error.surveyExists) {
         throw SurveyException.unprocessed(error.surveyName);
+      }
+      if (error.parentNotFound) {
+        throw SurveyException.notFoundForId(error.parentId);
       }
       throw new InternalServerErrorException();
     }

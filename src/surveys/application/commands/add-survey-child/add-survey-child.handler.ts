@@ -25,9 +25,9 @@ export class AddSurveyChildHandler implements ICommandHandler<AddSurveyChildComm
     await this.formRepository.findById(props.formId);
 
     const parentFound = await this.surveyRepository.findById(props.parentId);
-    if (parentFound) {
+    if (!parentFound) {
       throw {
-        parentExists: true,
+        parentNotFound: true,
         parentId: props.parentId
       };
     }

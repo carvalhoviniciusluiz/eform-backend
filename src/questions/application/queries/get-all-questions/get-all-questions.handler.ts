@@ -12,7 +12,7 @@ export class GetAllQuestionsHandler implements IQueryHandler<GetAllQuestionsQuer
   ) {}
 
   async execute(command: GetAllQuestionsQuery): Promise<[TQuestionEntity[], number]> {
-    const [rows, count] = await this.questionRepository.find(command.page, command.pagesize);
+    const [rows, count] = await this.questionRepository.find(command.surveyId, command.page, command.pagesize);
 
     const parsedRows = rows.map(this.filterResultProps);
 
@@ -20,11 +20,10 @@ export class GetAllQuestionsHandler implements IQueryHandler<GetAllQuestionsQuer
   }
 
   private filterResultProps(row: IQuestion) {
-    const { id, surveyId, content, updatedAt } = row.props();
+    const { id, content, updatedAt } = row.props();
 
     return {
       id,
-      surveyId,
       content,
       updatedAt
     };

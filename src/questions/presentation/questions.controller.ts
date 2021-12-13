@@ -14,8 +14,12 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateQuestionBodyDTO, QuestionException, UpdateQuestionBodyDTO } from 'questions/presentation';
-import { RequestPaginateDto } from 'common/dtos';
+import {
+  CreateQuestionBodyDTO,
+  QuestionException,
+  UpdateQuestionBodyDTO,
+  QuestionRequestPaginateDto
+} from 'questions/presentation';
 import { PaginatedQuestionResponseDto } from 'questions/presentation/dtos';
 import { IQuestionService } from 'questions/domain';
 import { QUESTION_SERVICE } from '../../constants';
@@ -33,9 +37,9 @@ export class QuestionsController {
 
   @ApiOkResponse({ type: PaginatedQuestionResponseDto })
   @Get()
-  async find(@Query(ValidationPipe) paginateDto: RequestPaginateDto): Promise<PaginatedQuestionResponseDto> {
-    const { page, pagesize } = paginateDto;
-    const [rows, count] = await this.questionService.find(page, pagesize);
+  async find(@Query(ValidationPipe) paginateDto: QuestionRequestPaginateDto): Promise<PaginatedQuestionResponseDto> {
+    const { surveyid: surveyId, page, pagesize } = paginateDto;
+    const [rows, count] = await this.questionService.find(surveyId, page, pagesize);
     return new PaginatedQuestionResponseDto(rows, count, page, pagesize);
   }
 

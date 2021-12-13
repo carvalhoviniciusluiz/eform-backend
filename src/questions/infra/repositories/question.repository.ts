@@ -6,8 +6,12 @@ import { Inject } from '@nestjs/common';
 export class QuestionRepository implements IQuestionRepository {
   constructor(@Inject(QuestionFactory) private readonly questionFactory: QuestionFactory) {}
 
-  async find(page = 0, pagesize = 20): Promise<[(null | IQuestion)[], number]> {
+  async find(surveyId: string, page = 0, pagesize = 20): Promise<[(null | IQuestion)[], number]> {
     const query = getConnection().createQueryBuilder().select('question').from(QuestionEntity, 'question');
+
+    query.where('question.survey_id = :surveyId', {
+      surveyId
+    });
 
     if (pagesize) {
       query.take(pagesize).skip(page * pagesize);

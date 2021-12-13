@@ -8,8 +8,8 @@ import { IQuestionService } from './interfaces';
 export class QuestionService implements IQuestionService {
   constructor(readonly commandBus: CommandBus, readonly queryBus: QueryBus) {}
 
-  async find(page: number, pagesize: number): Promise<[IQuestion[], number]> {
-    const query = new GetAllQuestionsQuery(page, pagesize);
+  async find(surveyId: string, page: number, pagesize: number): Promise<[IQuestion[], number]> {
+    const query = new GetAllQuestionsQuery(surveyId, page, pagesize);
     return this.queryBus.execute<GetAllQuestionsQuery, [IQuestion[], number]>(query);
   }
 

@@ -1,16 +1,14 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
-import { UserService } from 'users/domain';
+import { QuestionService } from 'questions/domain';
 
-import { v4 as uuid } from 'uuid';
-
-describe('UserService', () => {
-  let service: UserService;
+describe('QuestionService', () => {
+  let service: QuestionService;
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       providers: [
-        UserService,
+        QuestionService,
         {
           provide: CommandBus,
           useValue: {
@@ -25,12 +23,12 @@ describe('UserService', () => {
         }
       ]
     }).compile();
-    service = module.get(UserService);
+    service = module.get(QuestionService);
   });
 
   describe('save', () => {
     it('should return void', async () => {
-      const props = { id: uuid() };
+      const props = { surveyId: 'surveyId', content: 'content' };
 
       service.save = jest.fn().mockReturnValue(null);
 
@@ -42,8 +40,8 @@ describe('UserService', () => {
 
   describe('update', () => {
     it('should return void', async () => {
-      const id = uuid();
-      const props = {};
+      const id = 'id';
+      const props = { surveyId: 'surveyId', content: 'content' };
 
       service.update = jest.fn().mockReturnValue(null);
 
@@ -57,12 +55,13 @@ describe('UserService', () => {
     it('should return undefined', async () => {
       const page = 0;
       const pagesize = 20;
+      const surveyid = 'surveyid';
 
       service.find = jest.fn().mockReturnValue(null);
 
-      expect(await service.find(page, pagesize)).toBeNull();
+      expect(await service.find(surveyid, page, pagesize)).toBeNull();
       expect(service.find).toBeCalledTimes(1);
-      expect(service.find).toBeCalledWith(page, pagesize);
+      expect(service.find).toBeCalledWith(surveyid, page, pagesize);
     });
   });
 });

@@ -20,6 +20,10 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: ENV.POSTGRES_DB,
   port: ENV.POSTGRES_PORT,
   entities: [`${__dirname}/**/*.entity.{js,ts}`],
+  migrations: [`${__dirname}/__migrations/*.{js,ts}`],
   synchronize: ENV.IS_DEV,
-  logging: ENV.IS_DEV
+  logging: ENV.IS_DEV,
+  cli: {
+    migrationsDir: `${__dirname}/__migrations`
+  }
 };

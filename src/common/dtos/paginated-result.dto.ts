@@ -4,21 +4,19 @@ import { PaginatedMetaDto } from 'common/dtos';
 export class PaginatedResultDto {
   @ApiProperty({
     example: {
-      meta: {
-        count: 15,
-        page: 1,
-        pageSize: 10,
-        pageCount: 2,
-        pageNumberIsGood: true,
-        hasPreviousPage: true,
-        hasNextPage: false,
-        isFirstPage: false,
-        isLastPage: true,
-        numberOfFirstItemOnPage: 10,
-        firstItemOnPage: 10,
-        numberOfLastItemOnPage: 14,
-        lastItemOnPage: 14
-      }
+      count: 15,
+      page: 1,
+      pageSize: 10,
+      pageCount: 2,
+      pageNumberIsGood: true,
+      hasPreviousPage: true,
+      hasNextPage: false,
+      isFirstPage: false,
+      isLastPage: true,
+      numberOfFirstItemOnPage: 10,
+      firstItemOnPage: 10,
+      numberOfLastItemOnPage: 14,
+      lastItemOnPage: 14
     }
   })
   meta: PaginatedMetaDto;

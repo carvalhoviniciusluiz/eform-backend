@@ -78,8 +78,7 @@ describe('FormsController', () => {
           numberOfLastItemOnPage: 10,
           lastItemOnPage: 0
         },
-        statusCode: 200,
-        body: { status: 'success', rows: [body] }
+        rows: [body]
       };
 
       const page = 1;

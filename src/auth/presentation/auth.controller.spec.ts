@@ -34,8 +34,7 @@ describe('AuthController', () => {
       const password = 'password';
 
       const controllerReturnValue = {
-        body: { authorization: { accessToken: 'accessToken', refreshToken: 'refreshToken' }, status: 'success' },
-        statusCode: 200
+        data: { accessToken: 'accessToken', refreshToken: 'refreshToken' }
       };
 
       service.run = jest.fn().mockReturnValue(serviceReturnValue);

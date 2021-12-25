@@ -48,9 +48,8 @@ export class CreateUserBodyDTO {
     example: 'carvalho.viniciusluiz@gmail.com'
   })
   @IsString()
-  @MinLength(2)
-  @MaxLength(100)
-  @ApiProperty({ minLength: 2, maxLength: 100, example: 'carvalho.viniciusluiz@gmail.com' })
+  @MaxLength(250)
+  @ApiProperty({ maxLength: 250, example: 'carvalho.viniciusluiz@gmail.com' })
   readonly email: string;
 
   @ApiProperty({

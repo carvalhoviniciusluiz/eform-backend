@@ -33,14 +33,12 @@ export class AuthBodyDto {
   @ApiProperty({
     type: String,
     description: 'The credential only when grant_type is set to "password_grant"',
-    minLength: 11,
-    maxLength: 150,
+    maxLength: 250,
     example: '57127801355 | admin@admin'
   })
   @IsOptional()
   @IsString()
-  @MinLength(11)
-  @MaxLength(150)
+  @MaxLength(250)
   @Transform(({ value }) => value?.toLowerCase())
   @Expose({ name: 'credential' })
   credential?: string;

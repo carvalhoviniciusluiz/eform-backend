@@ -3,12 +3,11 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { BullModule } from '@nestjs/bull';
 import { CreateUserHandler, UpdateUserHandler } from 'users/application/commands';
 import { AddSendEmailJobHandle } from 'users/application/events';
-import { GetAllUsersHandler } from 'users/application/queries';
 import { UserFactory, UserService } from 'users/domain';
 import { SendConfirmationMailConsumer, UserRepository } from 'users/infra';
 import { UsersController } from 'users/presentation';
 import { queueConfig } from 'users/queueconfig';
-import * as ENV from 'users/../constants';
+import * as ENV from '../constants';
 
 const infrastructure = [
   {
@@ -17,7 +16,7 @@ const infrastructure = [
   },
   SendConfirmationMailConsumer
 ];
-const application = [GetAllUsersHandler, CreateUserHandler, UpdateUserHandler, AddSendEmailJobHandle];
+const application = [CreateUserHandler, UpdateUserHandler, AddSendEmailJobHandle];
 const domain = [
   UserFactory,
   {

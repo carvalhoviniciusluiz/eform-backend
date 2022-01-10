@@ -5,6 +5,9 @@ import { TABLE_PREFIX } from '../../../constants';
 
 @Entity(`${TABLE_PREFIX}users`)
 export class UserEntity extends BaseEntity {
+  @Column({ type: 'varchar', nullable: true })
+  avatar?: string;
+
   @Column({ type: 'varchar' })
   firstname?: string;
 

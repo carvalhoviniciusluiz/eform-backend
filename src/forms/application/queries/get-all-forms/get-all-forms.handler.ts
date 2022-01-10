@@ -20,11 +20,13 @@ export class GetAllFormsHandler implements IQueryHandler<GetAllFormsQuery, [TFor
   }
 
   private filterResultProps(row: IForm) {
-    const { id, name, updatedAt } = row.props();
+    const { id, name, status, createdAt, updatedAt } = row.props();
 
     return {
       id,
       name,
+      status,
+      createdAt,
       updatedAt
     };
   }

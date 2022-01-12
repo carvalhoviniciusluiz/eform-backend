@@ -10,6 +10,30 @@ export class ResponseFormRequestDto {
   @Expose()
   name: string;
 
+  @ApiProperty({ example: 'reviewed' })
+  @Expose()
+  status: string;
+
+  @ApiProperty({
+    example: {
+      avatars: [
+        'https://avatars.githubusercontent.com/u/22005684?v=4',
+        {
+          char: 'XZ',
+          color: '#4fc9da',
+          backgroundColor: '#ddf8fc'
+        }
+      ],
+      total: 2
+    }
+  })
+  @Expose()
+  consumers: any;
+
+  @ApiProperty({ example: '2021-10-07T13:59:39.792Z' })
+  @Expose()
+  createdAt: Date;
+
   @ApiProperty({ example: '2021-10-07T13:59:39.792Z' })
   @Expose()
   updatedAt: Date;

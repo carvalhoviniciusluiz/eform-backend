@@ -6,9 +6,22 @@ export class PaginatedFormResponseDto extends PaginatedResultDto {
   @ApiProperty({
     example: [
       {
-        id: 'ef3cc128-1e82-4ce9-a7f5-8878cd5de40a',
+        id: 'aa6c7f2a-7a6c-42f1-abb2-94172a523890',
         name: 'Form1',
-        updatedAt: '2021-11-03T02:15:05.623Z'
+        status: 'reviewed',
+        consumers: {
+          avatars: [
+            'https://avatars.githubusercontent.com/u/22005684?v=4',
+            {
+              char: 'XZ',
+              color: '#4fc9da',
+              backgroundColor: '#ddf8fc'
+            }
+          ],
+          total: 2
+        },
+        createdAt: '2021-12-11T17:44:15.212Z',
+        updatedAt: '2022-01-12T14:19:24.998Z'
       }
     ]
   })

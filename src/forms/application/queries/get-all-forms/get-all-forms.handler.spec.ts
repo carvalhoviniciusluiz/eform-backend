@@ -1,9 +1,9 @@
 import { ModuleMetadata, Provider } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { v4 as uuid } from 'uuid';
-import { GetAllFormsQuery } from 'forms/application/queries/get-all-forms/get-all-forms.query';
-import { GetAllFormsHandler } from 'forms/application/queries/get-all-forms/get-all-forms.handler';
-import { IForm, IFormRepository } from 'forms/domain';
+import { GetAllFormsQuery } from '@/forms/application/queries/get-all-forms/get-all-forms.query';
+import { GetAllFormsHandler } from '@/forms/application/queries/get-all-forms/get-all-forms.handler';
+import { IForm, IFormRepository } from '@/forms/domain';
 import { FORM_REPOSITORY } from '../../../../constants';
 
 describe('GetAllFormsHandler', () => {
@@ -40,10 +40,21 @@ describe('GetAllFormsHandler', () => {
 
     it('should return a collection', async () => {
       const id = uuid();
+      const createdAt = new Date();
       const updatedAt = new Date();
       const form: any = {
         props: () => ({
           id,
+          consumers: [
+            {
+              avatar: 'https://avatars.githubusercontent.com/u/22005684?v=4'
+            },
+            {
+              firstname: 'Vinícius',
+              lastname: 'Carvalho'
+            }
+          ],
+          createdAt,
           updatedAt,
           name: 'name'
         })
@@ -52,6 +63,18 @@ describe('GetAllFormsHandler', () => {
         [
           {
             id,
+            consumers: {
+              avatars: [
+                'https://avatars.githubusercontent.com/u/22005684?v=4',
+                {
+                  char: 'VC',
+                  color: '#4fc9da',
+                  backgroundColor: '#ddf8fc'
+                }
+              ],
+              total: 2
+            },
+            createdAt,
             updatedAt,
             name: 'name'
           }

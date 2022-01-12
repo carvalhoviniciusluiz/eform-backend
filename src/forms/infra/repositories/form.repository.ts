@@ -7,7 +7,11 @@ export class FormRepository implements IFormRepository {
   constructor(@Inject(FormFactory) private readonly formFactory: FormFactory) {}
 
   async find(page = 0, pagesize = 20): Promise<[(null | IForm)[], number]> {
-    const query = getConnection().createQueryBuilder().select('form').from(FormEntity, 'form');
+    const query = getConnection()
+      .createQueryBuilder()
+      .select('form')
+      .from(FormEntity, 'form')
+      .leftJoinAndSelect('form.consumers', 'consumer');
 
     if (pagesize) {
       query.take(pagesize).skip(page * pagesize);

@@ -18,10 +18,10 @@ export class PaginatedUserResponseDto extends PaginatedResultDto {
       }
     ]
   })
-  rows: ResponseUserRequestDto[];
+  data: ResponseUserRequestDto[];
 
   constructor(rows: any[], count: number, page: number, pageSize: number) {
     super(rows, count, page, pageSize);
-    this.rows = rows;
+    this.data = rows;
   }
 }

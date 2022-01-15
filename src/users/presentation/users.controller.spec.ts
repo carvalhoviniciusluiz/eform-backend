@@ -93,7 +93,7 @@ describe('UsersController', () => {
           numberOfLastItemOnPage: 10,
           lastItemOnPage: 0
         },
-        rows: [body]
+        data: [body]
       };
 
       const page = 1;

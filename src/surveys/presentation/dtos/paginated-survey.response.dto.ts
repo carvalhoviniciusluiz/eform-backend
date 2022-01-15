@@ -19,10 +19,10 @@ export class PaginatedSurveyResponseDto extends PaginatedResultDto {
       }
     ]
   })
-  rows: ResponseSurveyRequestDto[];
+  data: ResponseSurveyRequestDto[];
 
   constructor(rows: any[], count: number, page: number, pageSize: number) {
     super(rows, count, page, pageSize);
-    this.rows = rows;
+    this.data = rows;
   }
 }
